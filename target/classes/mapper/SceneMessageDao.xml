@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pfm.dao.SceneMessageDao">
+  <resultMap id="BaseResultMap" type="com.pfm.entity.SceneMessage">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="group_id" jdbcType="VARCHAR" property="groupId" />
+    <result column="stand_length" jdbcType="INTEGER" property="standLength" />
+    <result column="scene_type" jdbcType="VARCHAR" property="sceneType" />
+    <result column="scene_param" jdbcType="VARCHAR" property="sceneParam" />
+    <result column="area_space" jdbcType="VARCHAR" property="areaSpace" />
+    <result column="create_datetime" jdbcType="VARCHAR" property="createDatetime" />
+    <result column="delete_status" jdbcType="INTEGER" property="deleteStatus" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, group_id, stand_length, scene_type, scene_param, area_space, create_datetime, 
+    delete_status
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from scene_message
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from scene_message
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.pfm.entity.SceneMessage" useGeneratedKeys="true">
+    insert into scene_message (group_id, stand_length, scene_type, 
+      scene_param, area_space, create_datetime, 
+      delete_status)
+    values (#{groupId,jdbcType=VARCHAR}, #{standLength,jdbcType=INTEGER}, #{sceneType,jdbcType=VARCHAR}, 
+      #{sceneParam,jdbcType=VARCHAR}, #{areaSpace,jdbcType=VARCHAR}, #{createDatetime,jdbcType=VARCHAR}, 
+      #{deleteStatus,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.pfm.entity.SceneMessage" useGeneratedKeys="true">
+    insert into scene_message
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="groupId != null">
+        group_id,
+      </if>
+      <if test="standLength != null">
+        stand_length,
+      </if>
+      <if test="sceneType != null">
+        scene_type,
+      </if>
+      <if test="sceneParam != null">
+        scene_param,
+      </if>
+      <if test="areaSpace != null">
+        area_space,
+      </if>
+      <if test="createDatetime != null">
+        create_datetime,
+      </if>
+      <if test="deleteStatus != null">
+        delete_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="groupId != null">
+        #{groupId,jdbcType=VARCHAR},
+      </if>
+      <if test="standLength != null">
+        #{standLength,jdbcType=INTEGER},
+      </if>
+      <if test="sceneType != null">
+        #{sceneType,jdbcType=VARCHAR},
+      </if>
+      <if test="sceneParam != null">
+        #{sceneParam,jdbcType=VARCHAR},
+      </if>
+      <if test="areaSpace != null">
+        #{areaSpace,jdbcType=VARCHAR},
+      </if>
+      <if test="createDatetime != null">
+        #{createDatetime,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteStatus != null">
+        #{deleteStatus,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pfm.entity.SceneMessage">
+    update scene_message
+    <set>
+      <if test="groupId != null">
+        group_id = #{groupId,jdbcType=VARCHAR},
+      </if>
+      <if test="standLength != null">
+        stand_length = #{standLength,jdbcType=INTEGER},
+      </if>
+      <if test="sceneType != null">
+        scene_type = #{sceneType,jdbcType=VARCHAR},
+      </if>
+      <if test="sceneParam != null">
+        scene_param = #{sceneParam,jdbcType=VARCHAR},
+      </if>
+      <if test="areaSpace != null">
+        area_space = #{areaSpace,jdbcType=VARCHAR},
+      </if>
+      <if test="createDatetime != null">
+        create_datetime = #{createDatetime,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteStatus != null">
+        delete_status = #{deleteStatus,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pfm.entity.SceneMessage">
+    update scene_message
+    set group_id = #{groupId,jdbcType=VARCHAR},
+      stand_length = #{standLength,jdbcType=INTEGER},
+      scene_type = #{sceneType,jdbcType=VARCHAR},
+      scene_param = #{sceneParam,jdbcType=VARCHAR},
+      area_space = #{areaSpace,jdbcType=VARCHAR},
+      create_datetime = #{createDatetime,jdbcType=VARCHAR},
+      delete_status = #{deleteStatus,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
