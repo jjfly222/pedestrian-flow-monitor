@@ -2,4 +2,4 @@
 *.log
 
 # 忽略 target 目录
-target/
+/target/
