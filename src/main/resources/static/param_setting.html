@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>参数设置页面</title>
+    <link rel="stylesheet" href="element.css">
+</head>
+<body>
+
+<div id="param_setting" style="width: 80%; margin: 0 auto">
+
+
+    <el-form ref="form" :model="form" label-width="80px">
+        <el-form-item label="模板名称">
+            <el-input v-model="form.name"></el-input>
+        </el-form-item>
+
+        <el-row>
+            <el-col :span="8">
+                <el-form-item label="标准长度">
+                    <el-radio-group v-model="form.size">
+                        <el-radio label="1米"></el-radio>
+                        <el-radio label="2米"></el-radio>
+                    </el-radio-group>
+                </el-form-item>
+            </el-col>
+        </el-row>
+        <el-row>
+            <el-col :span="12">
+                <el-form-item label="区域形状">
+                    <el-radio-group v-model="form.region">
+                        <el-radio label="长方形"></el-radio>
+                        <el-radio label="圆形"></el-radio>
+                        <el-radio label="梯形"></el-radio>
+                    </el-radio-group>
+                </el-form-item>
+            </el-col>
+            <el-col :span="8">
+                <el-form-item label="区域面积">
+                    <el-input v-model="form.area"></el-input>
+                </el-form-item>
+            </el-col>
+        </el-row>
+
+        <el-row v-if="form.region==='长方形'">
+            <el-col :span="8">
+                <el-form-item label="长">
+                    <el-input v-model="form.param1" placeholder="审批人"></el-input>
+                </el-form-item>
+            </el-col>
+            <el-col :span="8">
+                <el-form-item label="宽">
+                    <el-input v-model="form.param2" placeholder="审批人"></el-input>
+                </el-form-item>
+            </el-col>
+        </el-row>
+        <el-row v-if="form.region==='圆形'">
+            <el-col :span="8">
+                <el-form-item label="半径">
+                    <el-input v-model="form.param1" placeholder="审批人"></el-input>
+                </el-form-item>
+            </el-col>
+        </el-row>
+
+        <el-form-item label="设定时间范围1" label-width="110px">
+            <template>
+                <el-time-picker
+                        v-model="form.time_start"
+                        placeholder="任意时间点">
+                </el-time-picker>
+                <el-time-picker
+                        v-model="form.time_end"
+                        placeholder="任意时间点">
+                </el-time-picker>
+            </template>
+        </el-form-item>
+
+        <el-form-item label="时间范围1对应区域最大人数" label-width="195px">
+            <el-input v-model="form.max_people_num"></el-input>
+        </el-form-item>
+        <el-row>
+            <el-col :span="8">
+                <el-form-item label="时间范围1, 当密度大于:" label-width="160px">
+                    <el-input v-model="form.max_people_density"></el-input>
+                </el-form-item>
+            </el-col>
+            <el-col :span="8">
+                <el-form-item label="人/m², 且移动速度小于:" label-width="160px">
+                    <el-input v-model="form.max_people_speed"></el-input>
+                </el-form-item>
+            </el-col>
+            <el-col :span="8">
+                <el-form-item label="m/s 时, 发出告警!" label-width="130px">
+                </el-form-item>
+            </el-col>
+        </el-row>
+
+        <br/>
+        <br/>
+
+        <el-form-item label="设定时间范围2" label-width="110px">
+            <template>
+                <el-time-picker
+                        v-model="form.time_start2"
+                        placeholder="任意时间点">
+                </el-time-picker>
+                <el-time-picker
+                        v-model="form.time_end2"
+                        placeholder="任意时间点">
+                </el-time-picker>
+            </template>
+        </el-form-item>
+
+
+        <el-form-item label="时间范围2对应区域最大人数" label-width="195px">
+            <el-input v-model="form.max_people_num2"></el-input>
+        </el-form-item>
+        <el-row>
+            <el-col :span="8">
+                <el-form-item label="时间范围2, 当密度大于:" label-width="160px">
+                    <el-input v-model="form.max_people_density2"></el-input>
+                </el-form-item>
+            </el-col>
+            <el-col :span="8">
+                <el-form-item label="人/m², 且移动速度小于:" label-width="160px">
+                    <el-input v-model="form.max_people_speed2"></el-input>
+                </el-form-item>
+            </el-col>
+            <el-col :span="8">
+                <el-form-item label="m/s 时, 发出告警!" label-width="130px">
+                </el-form-item>
+            </el-col>
+        </el-row>
+
+
+        <el-form-item>
+            <el-button type="primary" @click="onSubmit">立即创建</el-button>
+            <el-button>取消</el-button>
+        </el-form-item>
+    </el-form>
+
+</div>
+</body>
+</html>
+
+<script src="jquery.min.js"></script>
+<script src="vue.js"></script>
+<!-- 引入组件库 -->
+<script src="element.js"></script>
+<script>
+    new Vue({
+        el: '#param_setting',
+        data: {
+            form: {
+                name: '普通近景模板',
+                region: '',
+                size: '',
+                area: '',
+                max_people_num: '',
+                time_start: '',
+                time_end: '',
+                max_people_density: '',
+                max_people_speed: '',
+                max_people_num2: '',
+                time_start2: '',
+                time_end2: '',
+                max_people_density2: '',
+                max_people_speed2: '',
+                sudu: '',
+                midu2: '',
+                sudu2: '',
+                midu3: '',
+                sudu3: '',
+                param1: '',
+                param_value1: '',
+                param2: '',
+                param_value2: '',
+                param3: '',
+                param_value3: '',
+                user: '',
+                date1: '',
+                date2: '',
+                delivery: false,
+                type: [],
+                resource: 'ssss',
+                desc: ''
+            }
+        },
+        methods: {
+            onSubmit() {
+                console.log('submit!');
+            }
+        }
+    })
+</script>
