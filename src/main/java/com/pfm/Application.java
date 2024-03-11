@@ -17,6 +17,14 @@ import static org.springframework.boot.SpringApplication.run;
 @MapperScan("com.pfm.dao")
 public class Application {
     public static void main(String[] args) {
+        Integer a=273;
+        Integer b=273;
+        System.out.println("***");
+        if(a==b){
+            System.out.println("true");
+        }else {
+            System.out.println("false");
+        }
         ConfigurableApplicationContext run = run(Application.class, args);
     }
 

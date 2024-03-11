@@ -9,6 +9,8 @@
 <!--在body标签中，我们有一个id为"app"的div容器，用于挂载Vue实例。页面上显示了一个标题"用户信息表"、一个新增按钮和一个文本输入框。-->
 <div id="app" style="width: 80%; margin: 0 auto">
 
+    <hi>{{name}}</hi>
+
     <el-table
             :data="page"
             stripe
@@ -18,22 +20,30 @@
         <el-table-column
                 prop="groupId"
                 label="用户名">
+
         </el-table-column>
 
-        <el-table-column
-                prop="timeDay"
-                label="年龄"
-                width="180">
-        </el-table-column>
         <el-table-column
                 prop="targetId"
                 label="性别">
         </el-table-column>
     </el-table>
 
-
-
+    <video width="320" height="180" controls>
+        <!-- 指定视频文件的路径 -->
+        <source src="/video/output.mp4" type="video/mp4">
+    </video>
+    <video width="320" height="180" controls>
+        <!-- 指定视频文件的路径 -->
+        <source src="/video/walk8.mp4" type="video/mp4">
+    </video>
+    <video width="320" height="180" controls>
+        <!-- 指定视频文件的路径 -->
+        <source src="/video/walk9.mp4" type="video/mp4">
+    </video>
 </div>
+</body>
+</html>
 
 <script src="jquery.min.js"></script>
 <script src="vue.js"></script>
@@ -45,7 +55,7 @@
         el: '#app',// 在el属性中指定了Vue实例要挂载的元素id为"app"，即前面提到的div容器。
         data: { // data属性是一个对象，存储了Vue实例的数据。page用于存储从服务器获取到的用户信息数据，初始值为空对象。name是用于搜索用户名称的字段，默认为空字符串。
             page: {},
-            name: '',
+            name: 'nihaonihao',
             pageNum: 1,// pageNum表示当前页码，默认为1。
             pageSize: 5, // pageSize表示每页显示的数据条数，默认为5。
             dialogVisible: false,// dialogVisible控制弹窗的显示与隐藏，默认为false（隐藏）
@@ -66,7 +76,7 @@
         // 根据form对象中是否有id属性来判断是新增还是编辑操作）、del（删除用户信息的方法）等。
         methods: {
             loadTable(num) {
-                debugger;
+                // debugger;
                 $.ajax({
                     url: '/speed/all',
                     type: 'post',
@@ -84,5 +94,3 @@
         }
     })
 </script>
-</body>
-</html>

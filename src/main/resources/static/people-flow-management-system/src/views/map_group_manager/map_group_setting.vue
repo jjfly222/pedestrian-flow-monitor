@@ -1,9 +1,64 @@
 <template>
   <div class="map_group_setting">
     <div style="text-align: left; margin-bottom: 20px;">
-      <el-button class="add_button" type="primary">新增地图组</el-button>
+      <el-button class="add_button" type="primary" @click="handleAddMapGroup">新增地图组</el-button>
     </div>
-    <div>
+    
+    <el-collapse v-model="activeNames" @change="handleChange">
+      <el-collapse-item v-for="(item, index) in mapGroupList" :key="index" :name="item.groupId">
+        <template #title>
+          <div class="card-header">
+            <span>地图组：</span>
+            <div class="info_area">
+              <span v-if="!item.editFlag">{{ item.mapGroupNameSure }}</span>
+              <input v-else type="text" placeholder="请输入地图组名称" v-model="item.mapGroupName"/>
+            </div>
+            <div class="func_area">
+              <el-button v-if="!item.editFlag" class="edit_button" type="primary" @click.stop="handleEdit(item)">编辑</el-button>
+              <div v-else class="save_and_cancel">
+                <el-button class="cancel_button" type="warning" @click.stop="handleCancel(item)">取消</el-button>
+                <el-button class="save_button" type="primary" @click.stop="handleSave(item)">保存</el-button>
+              </div>
+            </div>
+          </div>
+        </template>
+        <div class="card_content">
+          <div class="map_img_list"
+            v-for="(val, index) in item.mapImgList"
+            :key="index"
+          >
+            <span v-if="!val.addImgFlg">{{ val.name }}</span>
+            <el-select v-else v-model="val.imgName" class="m-2" placeholder="请选择" size="large">
+              <el-option
+                v-for="op in options"
+                :key="op.value"
+                :label="op.label"
+                :value="op.value"
+              />
+            </el-select>
+            <div class="map_img_item">
+              <el-image
+              style="width: 100px;height: 100px"
+              :src="val.url"
+              fit="cover">
+                <template #error>
+                  <div class="image-slot">
+                    <el-icon><icon-picture /></el-icon>
+                  </div>
+                </template>
+              </el-image>
+              <el-icon v-if="item.editFlag" color="red" class="circle_close" @click="handleDeleteMap(item, index)"><CircleClose /></el-icon>
+            </div>
+          </div>
+          <div class="add_img" v-if="item.editFlag">
+            <div class="img_content" @click="handleAddImg(item)">
+              <el-icon><Plus /></el-icon>
+            </div>
+          </div>
+        </div>
+      </el-collapse-item>
+    </el-collapse>
+    <!-- <div>
       <el-card class="box-card">
         <template #header>
           <div class="card-header">
@@ -56,19 +111,137 @@
           </div>
         </div>
       </el-card>
-    </div>
+    </div> -->
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, reactive, watch } from 'vue'
+import { ElMessage } from 'element-plus'
+
 import { Picture as IconPicture, CircleClose, Plus } from '@element-plus/icons-vue'
 
+const activeNames = ref([])
 const editFlag = ref(false)
-const mapGroupName = ref('老庙组')
-const mapGroupNameSure = ref('老庙组')
+const mapGroupName = ref('老庙黄金')
+const mapGroupNameSure = ref('老庙黄金')
 const imgName = ref('')
 const addImgFlg = ref(false)
+const isEdit = ref(false)
+const mapGroupList = ref([
+  {
+    groupId: 0,
+    mapGroupName: '长泰广场',
+    mapGroupNameSure: '长泰广场',
+    editFlag: false,
+    mapImgList: [{
+      id: 0,
+      name: '喷泉中心',
+      url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
+      addImgFlg: false,
+      imgName: ''
+    },
+    {
+      id: 1,
+      name: '东庭院南街',
+      url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
+      addImgFlg: false,
+      imgName: ''
+    },
+    {
+      id: 2,
+      name: '盒马鲜生拐角',
+      url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
+      addImgFlg: false,
+      imgName: ''
+    },
+    {
+      id: 3,
+      name: '一汽大众东街',
+      url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
+      addImgFlg: false,
+      imgName: ''
+    },
+    {
+      id: 4,
+      name: '长泰E座转角',
+      url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
+      addImgFlg: false,
+      imgName: ''
+    },
+    {
+      id: 5,
+      name: '平安银行西街',
+      url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
+      addImgFlg: false,
+      imgName: ''
+    },
+    {
+      id: 6,
+      name: '长泰广场1座后街',
+      url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
+      addImgFlg: false,
+      imgName: ''
+    }]
+  },
+  {
+    groupId: 1,
+    mapGroupName: '金桥太茂商业中心',
+    mapGroupNameSure: '金桥太茂商业中心',
+    editFlag: false,
+    mapImgList: [{
+      id: 0,
+      name: '喜茶南门街',
+      url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
+      addImgFlg: false,
+      imgName: ''
+    },
+      {
+        id: 1,
+        name: '多乐东南角',
+        url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
+        addImgFlg: false,
+        imgName: ''
+      },
+      {
+        id: 2,
+        name: '特斯拉西北街',
+        url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
+        addImgFlg: false,
+        imgName: ''
+      },
+      {
+        id: 3,
+        name: 'oppo东北门街道',
+        url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
+        addImgFlg: false,
+        imgName: ''
+      },
+      {
+        id: 4,
+        name: '小米东街',
+        url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
+        addImgFlg: false,
+        imgName: ''
+      },
+      {
+        id: 5,
+        name: '南门入口区',
+        url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
+        addImgFlg: false,
+        imgName: ''
+      },
+      {
+        id: 6,
+        name: '中庭公共区',
+        url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
+        addImgFlg: false,
+        imgName: ''
+      }]
+  }
+])
+
+const mapImgList1 = ref([])
 const mapImgList = reactive([
   {
     id: 0,
@@ -150,24 +323,51 @@ const options = [
   },
 ]
 
-
-const handleCancel = () => {
-  editFlag.value = false
+const handleAddMapGroup = () => {
+  if (isEdit.value) {
+    ElMessage({
+      message: '请先保存当前编辑的地图组',
+      type: 'warning',
+    })
+    return
+  }
+  isEdit.value = true
+  const groupId = mapGroupList.value.length
+  mapGroupList.value.push({
+    groupId,
+    mapGroupName: '',
+    mapGroupNameSure: '',
+    editFlag: true,
+    mapImgList: []
+  })
+  activeNames.value.push(groupId)
 }
-const handleSave = () => {
-  editFlag.value = false
-  mapGroupNameSure.value = mapGroupName.value
-  mapImgList.forEach((item) => {
-    if (item.addImgFlg) {
-      item.addImgFlg = false,
-      item.name = item.imgName
+
+const handleChange = (val: string[]) => {
+  console.log(val)
+}
+
+const handleCancel = (item) => {
+  item.editFlag = false
+  item.mapImgList = JSON.parse(JSON.stringify(mapImgList1.value))
+  mapImgList1.value = []
+  isEdit.value = false
+}
+const handleSave = (item) => {
+  item.editFlag = false
+  item.mapGroupNameSure = item.mapGroupName
+  item.mapImgList.forEach((val) => {
+    if (val.addImgFlg) {
+      val.addImgFlg = false,
+      val.name = val.imgName
     }
   })
+  isEdit.value = false
 }
-const handleAddImg = () => {
-  addImgFlg.value = true
-  const length = mapImgList.length
-  mapImgList.push({
+const handleAddImg = (item) => {
+  item.addImgFlg= true
+  const length = item.mapImgList.length
+  item.mapImgList.push({
     id: length,
     name: '',
     url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
@@ -175,8 +375,21 @@ const handleAddImg = () => {
     imgName: ''
   })
 }
-const handleDeleteMap = (item, index) => {
-  mapImgList.splice(index, 1)
+const handleDeleteMap = (item:any, index:number) => {
+  item.mapImgList.splice(index, 1)
+}
+
+const handleEdit = (item) => {
+  if (isEdit.value) {
+    ElMessage({
+      message: '请先保存当前编辑的地图组',
+      type: 'warning',
+    })
+    return
+  }
+  isEdit.value = true
+  item.editFlag = true
+  mapImgList1.value = JSON.parse(JSON.stringify(item.mapImgList))
 }
 </script>
 <style scoped lang="scss">
@@ -187,6 +400,8 @@ const handleDeleteMap = (item, index) => {
   }
   .card-header {
     display: flex;
+    width: 100%;
+    margin-right: 20px;
   }
   .info_area {
     margin-left: 10px;
@@ -200,6 +415,7 @@ const handleDeleteMap = (item, index) => {
   .card_content {
     display: flex;
     flex-wrap: wrap;
+    margin-top: 30px;
   }
   .map_img_list {
     display: flex;
@@ -226,6 +442,7 @@ const handleDeleteMap = (item, index) => {
     height: 200px;
     display: flex;
     justify-content: center;
+    margin-top: 33px;
     .img_content {
       width: 110px;
       height: 110px;

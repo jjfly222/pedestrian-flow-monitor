@@ -9,13 +9,33 @@
           @close="handleClose"
           :collapse="isCollapse"
         >
-          <el-menu-item index="0">
+          <!-- <el-menu-item index="0">
             <el-icon><HomeFilled /></el-icon>
             <span>首页</span>
-          </el-menu-item>
-          <el-sub-menu v-for="(item, index) in allRoutes" :key="index" :index="`${index+1}`">
+          </el-menu-item> -->
+          <template v-for="(item, index) in allRoutes">
+            <el-sub-menu v-if="item.children" :key="index" :index="index">
+              <template #title>
+                <el-icon v-if="item.meta.icon">
+                  <component :is="item.meta.icon" />
+                </el-icon>
+                <span>{{ item.meta.title }}</span>
+              </template>
+              <el-menu-item v-for="(subItem, subIndex) in item.children" :key="index + 1 + '-' + subIndex" :index="index + 1 + '-' + subIndex" @click="toPage(item, subItem)">
+                {{ subItem.meta.title }}
+              </el-menu-item>
+            </el-sub-menu>
+            <el-menu-item v-else :key="index+allRoutes.length" :index="index" @click="toPage(item, null)">
+              <el-icon v-if="item.meta.icon">
+                <component :is="item.meta.icon" />
+              </el-icon>
+              <span>{{ item.meta.title }}</span>
+            </el-menu-item>
+            
+          </template>
+          <!-- <el-sub-menu v-for="(item, index) in allRoutes" :key="index" :index="`${index+1}`">
             <template #title>
-              <el-icon>
+              <el-icon v-if="item.meta.icon">
                 <component :is="item.meta.icon" />
               </el-icon>
               <span>{{ item.meta.title }}</span>
@@ -23,7 +43,7 @@
             <el-menu-item v-for="(subItem, subIndex) in item.children" :key="index + 1 + '-' + subIndex" :index="index + 1 + '-' + subIndex" @click="toPage(item, subItem)">
               {{ subItem.meta.title }}
             </el-menu-item>
-          </el-sub-menu>
+          </el-sub-menu> -->
         </el-menu>
       </el-aside>
       <el-main class="el_main">
@@ -34,6 +54,19 @@
           <el-icon class="icon_expand" v-show="isCollapse" @click="handleCollapse">
             <Fold />
           </el-icon>
+          <el-breadcrumb separator="/" class="breadcrumb">
+            <el-breadcrumb-item
+              v-for="(item, index) in routePath"
+              :key="index"
+            >
+              {{ item.title }}
+            </el-breadcrumb-item>
+
+            <!-- <el-breadcrumb-item :to="{ path: '/' }">homepage</el-breadcrumb-item>
+            <el-breadcrumb-item>promotion management</el-breadcrumb-item>
+            <el-breadcrumb-item>promotion list</el-breadcrumb-item>
+            <el-breadcrumb-item>promotion detail</el-breadcrumb-item> -->
+          </el-breadcrumb>
         </div>
         <div class="contain_view">
           <router-view />
@@ -50,13 +83,35 @@
 //   HomeFilled,
 //   Fold
 // } from '@element-plus/icons-vue'
-import { ref, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
+import { ref, reactive, onMounted, watch, nextTick } from 'vue'
+import { useRouter, useRoute, onBeforeRouteUpdate} from 'vue-router'
 
 const isCollapse = ref(false)
 const router = useRouter();
-const allRoutes = router.options.routes.filter((item) => item.meta && item.meta.title)
-console.log('allRoutes', allRoutes)
+const route = useRoute();
+const routePath = ref([
+  {
+    path: '',
+    title: ''
+  }
+])
+const allRoutes1 = router.options.routes[0].children.filter((item) => {
+  return item.meta && item.meta.title
+})
+const handleRoutes = (routes: any) => {
+  return routes
+    .filter((item:any) => {
+      if (item.meta && item.meta.hidden) {
+        return false
+      } else {
+        if (item.children) {
+          item.children = handleRoutes(item.children)
+        }
+      }
+      return true
+    });
+}
+const allRoutes = handleRoutes(allRoutes1)
 
 const handleOpen = (key: string, keyPath: string[]) => {
   console.log(key, keyPath)
@@ -70,13 +125,36 @@ const handleCollapse = () => {
 
 onMounted(() => {
   console.log('route', router.options.routes)
+
 })
+watch(() => route, (to, from) => {
+    console.log('Route changed');
+    console.log('New Route:', to);
+    console.log('Previous Route:', from);
+  });
 const toPage = (item: any, subItem: any) => {
-  // console.log('item', item)
+  console.log('item', item)
   // console.log('subItem', subItem)
   // return
-  router.push(item.path + '/' + subItem.path)
+  if (subItem) {
+    router.push(item.path + '/' + subItem.path)
+  } else {
+    router.push(item.path)
+  }
 }
+onBeforeRouteUpdate((to, from, next) => {
+  // 在 beforeRouteEnter 钩子中获取最新的路由信息
+  console.log('Latest Matched Routes:', to.matched);
+  routePath.value = []
+  const matched = to.matched.slice(1)
+  matched.forEach(item => {
+    routePath.value.push({
+      path: item.path,
+      title: item.meta.title
+    })
+  })
+  next();
+})
 </script>
 
 <style lang="scss" scoped>
@@ -84,7 +162,7 @@ const toPage = (item: any, subItem: any) => {
   height: 100%;
   width: 100%;
   .el-menu-vertical-demo {
-    height: 100%;
+    height: -webkit-fill-available;
   }
   .bread_crumb {
     height: 50px;
@@ -92,10 +170,15 @@ const toPage = (item: any, subItem: any) => {
     text-align: left;
     border-bottom: 1px solid #ebeef5;
     box-shadow: 0 1px 4px rgb(0 21 41 / 8%);
+    display: flex;
+    align-items: center;
     .icon_expand {
       margin-left: 20px;
       cursor: pointer;
       color: #000;
+    }
+    .breadcrumb {
+      margin-left: 20px;
     }
   }
   .contain_view {

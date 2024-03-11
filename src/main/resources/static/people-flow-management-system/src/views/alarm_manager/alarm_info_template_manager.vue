@@ -9,7 +9,7 @@
       style="width: 100%"
     >
       <el-table-column type="index" width="70" label="序号"/>
-      <el-table-column property="title" label="标题" width="120" />
+      <el-table-column property="title" label="标题" width="360" show-overflow-tooltip />
       <el-table-column property="content" label="内容" show-overflow-tooltip />
       <el-table-column label="操作" width="180">
         <template #default="scope">
@@ -106,8 +106,16 @@ interface User {
 }
 const tableData = ref<User[]>([
   {
-    title: 'xxx',
-    content: 'xxxxxxxxxxxxxxx'
+    title: '[map_group] 的 [monitor_name] 监控点位，发现人员拥挤现象',
+    content: '地图组 [map_group] 的 [monitor_name] 监控点，于 [occur_time] 发现人员拥挤现象，该监控点面积为：[area]，人员数量为：' +
+        '[people_num]，场地行人密度达到 [midu] 人/平方米，平均速度为 [sudu]，请及时前' +
+        '往现场疏通交通！！！'
+  },
+  {
+    title: '[map_group] 的 [monitor_name] 监控点位，发现人员移动过缓现象',
+    content: '地图组 [map_group] 的 [monitor_name] 监控点，于 [occur_time] 发现人员移动过缓现象，该监控点面积为：[area]，人员数量为：' +
+        '[people_num]，场地行人密度达到 [midu] 人/平方米，平均速度为 [sudu]，请及时前' +
+        '往现场疏通交通！！！'
   }
 ])
 const tagList = reactive([
@@ -120,7 +128,7 @@ const tagList = reactive([
     enName: 'area'
   },
   {
-    label: '监控代号',
+    label: '监控名称',
     enName: 'monitor_name'
   },
   {
@@ -133,15 +141,15 @@ const tagList = reactive([
   },
   {
     label: '密度',
-    enName: 'midu'
+    enName: 'density'
   },
   {
     label: '最快速度',
-    enName: 'fast_sudu'
+    enName: 'max_speed'
   },
   {
     label: '速度',
-    enName: 'sudu'
+    enName: 'avg_speed'
   }
 ])
 const addTemDialogVisible = ref(false)
