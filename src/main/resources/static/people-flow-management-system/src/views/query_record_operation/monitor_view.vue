@@ -14,7 +14,11 @@
     <el-card class="minitor_view">
       <div v-for="(item, index) in monitorList[mapGroup]" :key="index" class="block">
         <span class="demonstration">{{ item.name }}</span>
-        <el-image style="width: 100px; height: 100px" src="/picture/喷泉中心.jpg" fit="contain"/>
+        <el-image style="width: 250px; height: 180px" :src="item.url" fit="contain"/>
+<!--        <video width="220" height="180" controls>-->
+<!--          &lt;!&ndash; 使用动态属性绑定指定视频文件的路径 &ndash;&gt;-->
+<!--          <source :src="item.url" type="video/mp4"> -->
+<!--        </video>-->
       </div>
     </el-card>
     <div ref="mainEchartsDensity" style="width: 100%; height: 400px; margin-top:20px;"></div>
@@ -28,7 +32,7 @@ import * as echarts from "echarts";
 import {ref, reactive, onMounted} from 'vue'
 
 const mapGroup = ref('1')
-
+const videoUrl= 'http://localhost:8081/video/喷泉中心.mp4'
 const mapGroupOptions = reactive([
   {
     label: '长泰广场',
@@ -43,7 +47,8 @@ const monitorList: object = reactive({
   '1': [
     {
       name: '喷泉中心',
-      url: '/picture/喷泉中心.jpg'
+      // url: 'http://localhost:8081/video/喷泉中心.mp4'
+      url: 'http://localhost:8081/picture/喷泉中心.jpg'
     },
     {
       name: '东庭院南街',

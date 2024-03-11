@@ -10,9 +10,9 @@
       @selection-change="handleSelectionChange"
     >
       <el-table-column type="selection" width="55" />
-      <el-table-column type="index" width="70" label="序号"/>
+      <el-table-column type="index" width="60" label="序号"/>
       <el-table-column property="warningTitle" label="告警标题" width="120" />
-      <el-table-column property="sendTime" label="发送时间" show-overflow-tooltip />
+      <el-table-column property="sendTime" label="发送时间"width="180" />
       <el-table-column property="warningType" label="类型" width="120" />
       <el-table-column property="mapGroup" label="地图分组" width="120" />
       <el-table-column property="monitorNo" label="监控代号" width="120" />
@@ -29,8 +29,8 @@
           </el-select>
         </template> -->
       </el-table-column>
-      <el-table-column property="alarmDetails" label="处理详情" width="180" show-overflow-tooltip />
-      <el-table-column property="handleTime" label="处理时间" width="180" show-overflow-tooltip />
+      <el-table-column property="alarmDetails" label="处理详情"  show-overflow-tooltip />
+<!--      <el-table-column property="handleTime" label="处理时间" width="180" show-overflow-tooltip />-->
       <el-table-column label="操作" width="180">
         <template #default="scope">
           <div>
@@ -107,8 +107,8 @@ const tableData: User[] = reactive([
     warningTitle: '人群聚集告警',
     sendTime: '2023-12-20 16:00:05',
     warningType: '聚集告警',
-    mapGroup: '老庙黄金',
-    monitorNo: '金街 1 号',
+    mapGroup: '长泰广场',
+    monitorNo: '喷泉中心',
     handleInfo: '未处理',
     handleTime: '',
     alarmDetails: ''
@@ -117,8 +117,8 @@ const tableData: User[] = reactive([
     warningTitle: '人群速度缓慢',
     sendTime: '2023-12-20 16:00:05',
     warningType: '移动速度告警',
-    mapGroup: '老庙黄金',
-    monitorNo: '金街 2 号',
+    mapGroup: '长泰广场',
+    monitorNo: '东庭院南街',
     handleInfo: '已安排疏通',
     handleTime: '2023-12-20 17:25:05',
     alarmDetails: ''
@@ -127,8 +127,8 @@ const tableData: User[] = reactive([
     warningTitle: '人群聚集告警',
     sendTime: '2023-12-20 14:00:05',
     warningType: '聚集告警',
-    mapGroup: '苏州观前街',
-    monitorNo: '观前街 1 号',
+    mapGroup: '长泰广场',
+    monitorNo: '盒马鲜生拐角',
     handleInfo: '忽略',
     handleTime: '',
     alarmDetails: ''
@@ -137,8 +137,8 @@ const tableData: User[] = reactive([
     warningTitle: '人群聚集告警',
     sendTime: '2023-12-20 16:00:05',
     warningType: '聚集告警',
-    mapGroup: '老庙黄金',
-    monitorNo: '金街 1 号',
+    mapGroup: '金桥太茂商业中心',
+    monitorNo: '喜茶南门街',
     handleInfo: '未处理',
     handleTime: '',
     alarmDetails: ''
@@ -147,8 +147,8 @@ const tableData: User[] = reactive([
     warningTitle: '人群聚集告警',
     sendTime: '2023-12-20 16:00:05',
     warningType: '聚集告警',
-    mapGroup: '老庙黄金',
-    monitorNo: '金街 1 号',
+    mapGroup: '金桥太茂商业中心',
+    monitorNo: '多乐东南角',
     handleInfo: '重发',
     handleTime: '',
     alarmDetails: ''

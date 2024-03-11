@@ -72,7 +72,7 @@
           <el-table-column type="selection" width="55" />
           <el-table-column property="mapGroup" label="地图组" width="120" />
           <el-table-column property="monitoryPointName" label="监控点名称" show-overflow-tooltip />
-          <el-table-column label="时间" width="120">
+          <el-table-column label="时间" width="240">
             <template #default="scope">{{ scope.row.date }}</template>
           </el-table-column>
           <el-table-column property="averageSpeed" label="平均速度" show-overflow-tooltip />
@@ -151,7 +151,7 @@
         >
           <el-table-column type="selection" width="55" />
           <el-table-column property="mapGroup" label="地图组" width="120" />
-          <el-table-column label="时间" width="120">
+          <el-table-column label="时间" width="240">
             <template #default="scope">{{ scope.row.date }}</template>
           </el-table-column>
           <el-table-column property="averageSpeed" label="平均速度" show-overflow-tooltip />
@@ -193,29 +193,29 @@ const timeIntervalList = reactive([
 
 const mapGroupList = reactive([
   {
-    label: '老庙黄金',
+    label: '长泰广场',
     value: '1',
   },
   {
-    label: '苏州观前街',
+    label: '金桥太茂商业中心',
     value: '2',
   },
 ])
 const monitoryPointList = reactive([
   {
-    label: '老庙黄金-1',
+    label: '喷泉中心',
     value: '1-1',
   },
   {
-    label: '老庙黄金-2',
+    label: '东庭院南街',
     value: '1-2',
   },
   {
-    label: '苏州观前街-1',
+    label: '多乐东南角',
     value: '2-1',
   },
   {
-    label: '苏州观前街-2',
+    label: '特斯拉西北街',
     value: '2-2',
   }
 ])
@@ -235,29 +235,29 @@ interface MapGroup {
 
 const tableData:User[] = [
   {
-    mapGroup: '老庙黄金',
-    monitoryPointName: '老庙黄金-1',
+    mapGroup: '长泰广场',
+    monitoryPointName: '喷泉中心',
     date: '2021-08-01 12:00:00',
     averageSpeed: '1.2',
     crowdDensity: '1.2'
   },
   {
-    mapGroup: '老庙黄金',
-    monitoryPointName: '老庙黄金-2',
+    mapGroup: '长泰广场',
+    monitoryPointName: '东庭院南街',
     date: '2021-08-01 12:00:00',
     averageSpeed: '1.2',
     crowdDensity: '1.2'
   },
   {
-    mapGroup: '苏州观前街',
-    monitoryPointName: '苏州观前街-1',
+    mapGroup: '金桥太茂商业中心',
+    monitoryPointName: '喜茶南门街',
     date: '2021-08-01 12:00:00',
     averageSpeed: '1.2',
     crowdDensity: '1.2'
   },
   {
-    mapGroup: '苏州观前街',
-    monitoryPointName: '苏州观前街-2',
+    mapGroup: '金桥太茂商业中心',
+    monitoryPointName: '多乐东南角',
     date: '2021-08-01 12:00:00',
     averageSpeed: '1.2',
     crowdDensity: '1.2'
@@ -265,13 +265,13 @@ const tableData:User[] = [
 ]
 const mapGroupData:MapGroup[] = [
   {
-    mapGroup: '老庙黄金',
+    mapGroup: '长泰广场',
     date: '2021-08-01 12:00:00',
     averageSpeed: '1.2',
     crowdDensity: '1.2'
   },
   {
-    mapGroup: '苏州观前街',
+    mapGroup: '金桥太茂商业中心',
     date: '2021-08-01 12:00:00',
     averageSpeed: '1.2',
     crowdDensity: '1.2'
