@@ -22,6 +22,12 @@
     <result column="group_id" jdbcType="VARCHAR" property="groupId" />
     <result column="picture_num" jdbcType="INTEGER" property="pictureNum" />
     <result column="num_people" jdbcType="INTEGER" property="numPeople" />
+    <result column="create_datetime" jdbcType="VARCHAR" property="createDatetime" />
+  </resultMap>
+  <resultMap id="GroupResultMap" type="com.pfm.entity.GroupPictureTime">
+    <result column="group_id" jdbcType="VARCHAR" property="groupId" />
+    <result column="picture_num" jdbcType="INTEGER" property="pictureNum" />
+    <result column="create_datetime" jdbcType="VARCHAR" property="createDatetime" />
   </resultMap>
 
 
@@ -37,6 +43,16 @@
     <include refid="Base_Column_List" />
     from picture_base_record
     where status="-1" order by picture_num
+  </select>
+
+  <select id="selectAllGroupPictureTime"   resultMap="GroupResultMap">
+    SELECT group_id,
+           picture_num,
+           create_datetime
+    FROM picture_base_record
+    where status="-1"
+    GROUP BY group_id, picture_num,create_datetime
+    order by picture_num
   </select>
 
   <select id="queryPersonNum"   resultMap="PersonResultMap">

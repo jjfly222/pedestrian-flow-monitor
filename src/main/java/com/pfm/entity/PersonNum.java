@@ -13,6 +13,7 @@ public class PersonNum {
     private BigDecimal numAvgPeople;
 
     private BigDecimal speedAvgPeople;
+    private String createDatetime;
 
 
 

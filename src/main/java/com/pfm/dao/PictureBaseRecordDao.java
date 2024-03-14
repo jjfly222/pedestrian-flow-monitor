@@ -1,5 +1,6 @@
 package com.pfm.dao;
 
+import com.pfm.entity.GroupPictureTime;
 import com.pfm.entity.PersonNum;
 import com.pfm.entity.PictureBaseRecord;
 import org.springframework.stereotype.Repository;
@@ -10,6 +11,8 @@ import java.util.List;
 public interface PictureBaseRecordDao {
 
     List<PictureBaseRecord> selectAll();
+
+    List<GroupPictureTime> selectAllGroupPictureTime();
 
     List<PersonNum> queryPersonNum();
 
