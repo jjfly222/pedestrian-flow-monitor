@@ -1,6 +1,8 @@
 package com.pfm.entity;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+
 import lombok.Data;
 
 /**
@@ -75,6 +77,8 @@ public class PictureBaseRecord implements Serializable {
      * 创建时间
      */
     private String createDatetime;
+
+    private BigDecimal speed;
 
     private static final long serialVersionUID = 1L;
 }

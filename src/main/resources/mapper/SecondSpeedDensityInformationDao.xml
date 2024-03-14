@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pfm.dao.SecondSpeedDensityInformationDao">
+  <resultMap id="BaseResultMap" type="com.pfm.entity.SecondSpeedDensityInformation">
+    <id column="pk_id" jdbcType="INTEGER" property="pkId" />
+    <result column="start_time" jdbcType="VARCHAR" property="startTime" />
+    <result column="end_time" jdbcType="VARCHAR" property="endTime" />
+    <result column="time_interval" jdbcType="INTEGER" property="timeInterval" />
+    <result column="map_id" jdbcType="VARCHAR" property="mapId" />
+    <result column="monitor_id" jdbcType="INTEGER" property="monitorId" />
+    <result column="avg_speed" jdbcType="DECIMAL" property="avgSpeed" />
+    <result column="avg_density" jdbcType="DECIMAL" property="avgDensity" />
+    <result column="avg_num" jdbcType="DECIMAL" property="avgNum" />
+    <result column="state" jdbcType="VARCHAR" property="state" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="mod_time" jdbcType="TIMESTAMP" property="modTime" />
+    <result column="del_time" jdbcType="TIMESTAMP" property="delTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    pk_id, start_time, end_time, time_interval, map_id, monitor_id, avg_speed, avg_density, 
+    avg_num, `state`, create_time, mod_time, del_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from second_speed_density_information
+    where pk_id = #{pkId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from second_speed_density_information
+    where pk_id = #{pkId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="pk_id" keyProperty="pkId" parameterType="com.pfm.entity.SecondSpeedDensityInformation" useGeneratedKeys="true">
+    insert into second_speed_density_information (start_time, end_time, time_interval, 
+      map_id, monitor_id, avg_speed, 
+      avg_density, avg_num, `state`, 
+      create_time, mod_time, del_time
+      )
+    values (#{startTime,jdbcType=VARCHAR}, #{endTime,jdbcType=VARCHAR}, #{timeInterval,jdbcType=INTEGER}, 
+      #{mapId,jdbcType=VARCHAR}, #{monitorId,jdbcType=VARCHAR}, #{avgSpeed,jdbcType=DECIMAL},
+      #{avgDensity,jdbcType=DECIMAL}, #{avgNum,jdbcType=DECIMAL}, #{state,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{modTime,jdbcType=TIMESTAMP}, #{delTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+
+
+  <insert id="insertAll" keyColumn="pk_id" keyProperty="pkId" parameterType="java.util.List" useGeneratedKeys="true">
+    insert into second_speed_density_information (start_time, end_time, time_interval,
+      map_id, monitor_id, avg_speed,
+      avg_density, avg_num, `state`,
+      create_time, mod_time, del_time
+      )  values
+    <foreach collection="list" item="item" separator=",">
+    (#{item.startTime,jdbcType=VARCHAR}, #{item.endTime,jdbcType=VARCHAR}, #{item.timeInterval,jdbcType=INTEGER},
+      #{item.mapId,jdbcType=VARCHAR}, #{item.monitorId,jdbcType=VARCHAR}, #{item.avgSpeed,jdbcType=DECIMAL},
+      #{item.avgDensity,jdbcType=DECIMAL}, #{item.avgNum,jdbcType=DECIMAL}, #{item.state,jdbcType=VARCHAR},
+      #{item.createTime,jdbcType=TIMESTAMP}, #{item.modTime,jdbcType=TIMESTAMP}, #{item.delTime,jdbcType=TIMESTAMP}
+      )
+    </foreach>
+  </insert>
+
+
+  <insert id="insertSelective" keyColumn="pk_id" keyProperty="pkId" parameterType="com.pfm.entity.SecondSpeedDensityInformation" useGeneratedKeys="true">
+    insert into second_speed_density_information
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="startTime != null">
+        start_time,
+      </if>
+      <if test="endTime != null">
+        end_time,
+      </if>
+      <if test="timeInterval != null">
+        time_interval,
+      </if>
+      <if test="mapId != null">
+        map_id,
+      </if>
+      <if test="monitorId != null">
+        monitor_id,
+      </if>
+      <if test="avgSpeed != null">
+        avg_speed,
+      </if>
+      <if test="avgDensity != null">
+        avg_density,
+      </if>
+      <if test="avgNum != null">
+        avg_num,
+      </if>
+      <if test="state != null">
+        `state`,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="modTime != null">
+        mod_time,
+      </if>
+      <if test="delTime != null">
+        del_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="startTime != null">
+        #{startTime,jdbcType=VARCHAR},
+      </if>
+      <if test="endTime != null">
+        #{endTime,jdbcType=VARCHAR},
+      </if>
+      <if test="timeInterval != null">
+        #{timeInterval,jdbcType=INTEGER},
+      </if>
+      <if test="mapId != null">
+        #{mapId,jdbcType=VARCHAR},
+      </if>
+      <if test="monitorId != null">
+        #{monitorId,jdbcType=VARCHAR},
+      </if>
+      <if test="avgSpeed != null">
+        #{avgSpeed,jdbcType=DECIMAL},
+      </if>
+      <if test="avgDensity != null">
+        #{avgDensity,jdbcType=DECIMAL},
+      </if>
+      <if test="avgNum != null">
+        #{avgNum,jdbcType=DECIMAL},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modTime != null">
+        #{modTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delTime != null">
+        #{delTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pfm.entity.SecondSpeedDensityInformation">
+    update second_speed_density_information
+    <set>
+      <if test="startTime != null">
+        start_time = #{startTime,jdbcType=VARCHAR},
+      </if>
+      <if test="endTime != null">
+        end_time = #{endTime,jdbcType=VARCHAR},
+      </if>
+      <if test="timeInterval != null">
+        time_interval = #{timeInterval,jdbcType=INTEGER},
+      </if>
+      <if test="mapId != null">
+        map_id = #{mapId,jdbcType=VARCHAR},
+      </if>
+      <if test="monitorId != null">
+        monitor_id = #{monitorId,jdbcType=VARCHAR},
+      </if>
+      <if test="avgSpeed != null">
+        avg_speed = #{avgSpeed,jdbcType=DECIMAL},
+      </if>
+      <if test="avgDensity != null">
+        avg_density = #{avgDensity,jdbcType=DECIMAL},
+      </if>
+      <if test="avgNum != null">
+        avg_num = #{avgNum,jdbcType=DECIMAL},
+      </if>
+      <if test="state != null">
+        `state` = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modTime != null">
+        mod_time = #{modTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delTime != null">
+        del_time = #{delTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where pk_id = #{pkId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pfm.entity.SecondSpeedDensityInformation">
+    update second_speed_density_information
+    set start_time = #{startTime,jdbcType=VARCHAR},
+      end_time = #{endTime,jdbcType=VARCHAR},
+      time_interval = #{timeInterval,jdbcType=INTEGER},
+      map_id = #{mapId,jdbcType=VARCHAR},
+      monitor_id = #{monitorId,jdbcType=VARCHAR},
+      avg_speed = #{avgSpeed,jdbcType=DECIMAL},
+      avg_density = #{avgDensity,jdbcType=DECIMAL},
+      avg_num = #{avgNum,jdbcType=DECIMAL},
+      `state` = #{state,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      mod_time = #{modTime,jdbcType=TIMESTAMP},
+      del_time = #{delTime,jdbcType=TIMESTAMP}
+    where pk_id = #{pkId,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -17,12 +17,43 @@
     <result column="status" jdbcType="INTEGER" property="status" />
     <result column="create_datetime" jdbcType="VARCHAR" property="createDatetime" />
   </resultMap>
+
+  <resultMap id="PersonResultMap" type="com.pfm.entity.PersonNum">
+    <result column="group_id" jdbcType="VARCHAR" property="groupId" />
+    <result column="picture_num" jdbcType="INTEGER" property="pictureNum" />
+    <result column="num_people" jdbcType="INTEGER" property="numPeople" />
+  </resultMap>
+
+
   <sql id="Base_Column_List">
     id, group_id, time_day, picture_num, target_id, left_x, left_y, width, height, other, 
     type_id, type_name, `status`, create_datetime
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+
+
+
+  <select id="selectAll"   resultMap="BaseResultMap">
     select 
+    <include refid="Base_Column_List" />
+    from picture_base_record
+    where status="-1" order by picture_num
+  </select>
+
+  <select id="queryPersonNum"   resultMap="PersonResultMap">
+    SELECT group_id,
+           picture_num,
+           COUNT(DISTINCT target_id) AS num_people,
+           create_datetime
+    FROM picture_base_record
+    where status="-1"
+    GROUP BY group_id, picture_num,create_datetime
+    order by picture_num
+
+  </select>
+
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
     <include refid="Base_Column_List" />
     from picture_base_record
     where id = #{id,jdbcType=INTEGER}
@@ -189,5 +220,12 @@
       `status` = #{status,jdbcType=INTEGER},
       create_datetime = #{createDatetime,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateBygroupAndTime" parameterType="com.pfm.entity.PictureBaseRecord">
+    update picture_base_record
+    set
+      `status` ="0"
+    where id = #{groupId,jdbcType=VARCHAR} and  create_datetime = #{createDatetime,jdbcType=VARCHAR}
   </update>
 </mapper>
