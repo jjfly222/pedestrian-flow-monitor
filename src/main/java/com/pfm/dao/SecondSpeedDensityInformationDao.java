@@ -7,6 +7,8 @@ import java.util.List;
 
 @Repository
 public interface SecondSpeedDensityInformationDao {
+    List<SecondSpeedDensityInformation> queryAll();
+
     int deleteByPrimaryKey(Integer pkId);
 
     int insert(SecondSpeedDensityInformation record);

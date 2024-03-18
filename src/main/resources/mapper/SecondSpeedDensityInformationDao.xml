@@ -20,8 +20,14 @@
     pk_id, start_time, end_time, time_interval, map_id, monitor_id, avg_speed, avg_density, 
     avg_num, `state`, create_time, mod_time, del_time
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="queryAll"   resultMap="BaseResultMap">
     select 
+    <include refid="Base_Column_List" />
+    from second_speed_density_information
+  </select>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
     <include refid="Base_Column_List" />
     from second_speed_density_information
     where pk_id = #{pkId,jdbcType=INTEGER}

@@ -52,27 +52,27 @@ const monitorList: object = reactive({
     },
     {
       name: '东庭院南街',
-      url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'
+      url: 'http://localhost:8081/picture/东庭院南街.jpg'
     },
     {
       name: '盒马鲜生拐角',
-      url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'
+      url: 'http://localhost:8081/picture/盒马鲜生拐角.jpg'
     },
     {
       name: '一汽大众东街',
-      url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'
+      url: 'http://localhost:8081/picture/一汽大众东街.jpg'
     },
     {
       name: '长泰E座转角',
-      url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'
+      url: 'http://localhost:8081/picture/长泰E座转角.jpg'
     },
     {
       name: '平安银行西街',
-      url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'
+      url: 'http://localhost:8081/picture/平安银行西街.jpg'
     },
     {
       name: '长泰广场1座后街',
-      url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'
+      url: 'http://localhost:8081/picture/长泰广场1座后街.jpg'
     }
   ],
   '2': [

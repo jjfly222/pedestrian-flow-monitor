@@ -15,6 +15,14 @@
     id, group_id, stand_length, scene_type, scene_param, area_space, create_datetime, 
     delete_status
   </sql>
+
+  <select id="queryAll"  resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from scene_message
+    where delete_status != "0"
+  </select>
+
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

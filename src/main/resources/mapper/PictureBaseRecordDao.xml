@@ -242,6 +242,6 @@
     update picture_base_record
     set
       `status` ="0"
-    where id = #{groupId,jdbcType=VARCHAR} and  create_datetime = #{createDatetime,jdbcType=VARCHAR}
+    where group_id = #{groupId,jdbcType=VARCHAR} and  create_datetime = #{createDatetime,jdbcType=VARCHAR}
   </update>
 </mapper>

@@ -19,6 +19,7 @@ public class CameraCapture {
             return;
         }
 
+
         // 设置视频捕捉的分辨率
         camera.set(Videoio.CAP_PROP_FRAME_WIDTH, 640);
         camera.set(Videoio.CAP_PROP_FRAME_HEIGHT, 480);

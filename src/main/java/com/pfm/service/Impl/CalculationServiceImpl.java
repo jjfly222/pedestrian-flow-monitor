@@ -1,6 +1,7 @@
 package com.pfm.service.Impl;
 
 import com.pfm.dao.PictureBaseRecordDao;
+import com.pfm.dao.SceneMessageDao;
 import com.pfm.dao.SecondSpeedDensityInformationDao;
 import com.pfm.entity.*;
 import com.pfm.service.CalculationService;
@@ -24,8 +25,14 @@ public class CalculationServiceImpl implements CalculationService {
     @Autowired
     private PictureBaseRecordDao pictureBaseRecordDao;
 
+    @Autowired
+    private SceneMessageDao sceneMessageDao;
+
     @Override
     public void CalculationPerson() {
+
+        List<SceneMessage> sceneMessages = sceneMessageDao.queryAll();
+
         List<GroupPictureTime> groupPictureTimes = pictureBaseRecordDao.selectAllGroupPictureTime();
         Map<String, List<GroupPictureTime>> groupPictureTimeMap = groupPictureTimes.stream()
                 .collect(Collectors.groupingBy(gpt -> gpt.getGroupId() + "__" + gpt.getCreateDatetime()));
@@ -33,11 +40,7 @@ public class CalculationServiceImpl implements CalculationService {
 
         List<PictureBaseRecord> pictureBaseRecords = pictureBaseRecordDao.selectAll();
         List<PersonNum> personNumList = pictureBaseRecordDao.queryPersonNum();
-        Map<String, Object> keyMap = new HashMap<>();
-        keyMap.put("groupId", pictureBaseRecords.get(0).getGroupId());
-        keyMap.put("time", pictureBaseRecords.get(0).getCreateDatetime());
 
-        personNumList.get(0).getGroupId();
         List<PictureBaseRecord> pictureBaseRecordList = new ArrayList<>();
 
         Map<String, Map<Integer, List<PictureBaseRecord>>> groupedByGroupIdAndPictureNum = pictureBaseRecords.stream()
@@ -50,7 +53,7 @@ public class CalculationServiceImpl implements CalculationService {
                 if (pictureBaseRecords2 != null && pictureBaseRecords2.size() > 0) {
                     for (PictureBaseRecord pp : pictureBaseRecords2) {
                         for (PictureBaseRecord dd : pictureBaseRecords1) {
-                            if (pp.getTargetId() == dd.getTargetId()) {
+                            if (pp.getTargetId().equals(dd.getTargetId())) {
                                 BigDecimal speed = this.calculateDistance(pp, dd);
                                 pp.setSpeed(speed);
                                 pictureBaseRecordList.add(pp);
@@ -58,8 +61,6 @@ public class CalculationServiceImpl implements CalculationService {
                         }
                     }
                 }
-
-
             });
         });
 
@@ -76,27 +77,23 @@ public class CalculationServiceImpl implements CalculationService {
                 onePictureSpeedList.add(personNum);
             });
         }));
-        //计算单秒的人数
-//        Map<String, Map<Integer, List<PersonNum>>> collect = personNumList.stream()
-//                .collect(Collectors.groupingBy(PersonNum::getGroupId,
-//                Collectors.groupingBy(PersonNum::getPictureNum)));
 
-        //人数分组
-        AtomicInteger counter = new AtomicInteger(0);
+        //人数分组   这里需要再加上时间
+//        AtomicInteger counter = new AtomicInteger(0);
         Map<String, Map<Integer, List<PersonNum>>> groupedByTimeNum = personNumList.stream()
-                .sorted(Comparator.comparingInt(PersonNum::getPictureNum))
+                .sorted(Comparator.comparing(PersonNum::getGroupId).thenComparingInt(PersonNum::getPictureNum))
                 .collect(Collectors.groupingBy(
                         PersonNum::getGroupId,
-                        Collectors.groupingBy(record -> (counter.incrementAndGet() - 1) / 3 + 1)
+                        Collectors.groupingBy(record -> (record.getPictureNum() - 1) / 3 + 1)
                 ));
 
         //速度分组
-        AtomicInteger counter2 = new AtomicInteger(0);
+//        AtomicInteger counter2 = new AtomicInteger(0);
         Map<String, Map<Integer, List<PersonNum>>> groupedBySpeedNum = onePictureSpeedList.stream()
-                .sorted(Comparator.comparingInt(PersonNum::getPictureNum))
+                .sorted(Comparator.comparing(PersonNum::getGroupId).thenComparingInt(PersonNum::getPictureNum))
                 .collect(Collectors.groupingBy(
                         PersonNum::getGroupId,
-                        Collectors.groupingBy(record -> (counter2.incrementAndGet() - 1) / 3 + 1)
+                        Collectors.groupingBy(record -> (record.getPictureNum() - 1) / 3 + 1)
                 ));
 
 
@@ -105,20 +102,27 @@ public class CalculationServiceImpl implements CalculationService {
         groupPictureTimeMap.forEach((key, gptMap) -> {
             String keyGroupId = key.split("__")[0];
             String keyTime = key.split("__")[1];
+            int px = 80;
+            for (SceneMessage sceneMessage : sceneMessages) {
+                if (sceneMessage.getGroupId().equals(keyGroupId)) {
+                    px = sceneMessage.getStandLength();
+                }
+            }
+
 
             for (int i = 0; i < groupedByTimeNum.get(keyGroupId).size(); i++) {
                 SecondSpeedDensityInformation secondSpeedDensityInformation = new SecondSpeedDensityInformation();
                 secondSpeedDensityInformation.setStartTime(this.addTime(keyTime, i));
                 secondSpeedDensityInformation.setTimeInterval(1);
                 secondSpeedDensityInformation.setMonitorId(keyGroupId);
-                secondSpeedDensityInformation.setAvgSpeed(this.calculateAvgSpeed(groupedBySpeedNum.get(keyGroupId).get(i), new BigDecimal(80)));
+                secondSpeedDensityInformation.setAvgSpeed(this.calculateAvgSpeed(groupedBySpeedNum.get(keyGroupId).get(i), new BigDecimal(px)));
                 secondSpeedDensityInformation.setAvgNum(this.calculateAvgPersonNum(groupedByTimeNum.get(keyGroupId).get(i)));
                 secondSpeedDensityInformationList.add(secondSpeedDensityInformation);
             }
             PictureBaseRecord pictureBaseRecord = new PictureBaseRecord();
             pictureBaseRecord.setGroupId(keyGroupId);
             pictureBaseRecord.setCreateDatetime(keyTime);
-//            pictureBaseRecordDao.updateBygroupAndTime(pictureBaseRecord);
+            pictureBaseRecordDao.updateBygroupAndTime(pictureBaseRecord);
         });
 
         secondSpeedDensityInformationDao.insertAll(secondSpeedDensityInformationList);
@@ -126,6 +130,13 @@ public class CalculationServiceImpl implements CalculationService {
         System.out.println("aaaaaaaaaa");
         return;
 
+    }
+
+
+    @Override
+    public List<SecondSpeedDensityInformation> queryDate() {
+        List<SecondSpeedDensityInformation> secondSpeedDensityInformations = secondSpeedDensityInformationDao.queryAll();
+        return secondSpeedDensityInformations;
     }
 
     /**
