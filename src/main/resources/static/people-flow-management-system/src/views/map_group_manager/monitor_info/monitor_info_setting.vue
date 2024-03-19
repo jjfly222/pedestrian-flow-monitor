@@ -24,16 +24,16 @@
         <div class="monitor_item">
           <span>{{ temInfo.monitorName }}</span>
           <el-image
-            style="width: 100px; height: 100px"
             src="http://localhost:8081/example/喷泉样例1.jpg"
+            style="width: 300px; height: 200px"
             fit="cover"
           ></el-image>
         </div>
         <div class="monitor_item">
           <span>{{ temInfo.monitorName }}例图</span>
           <el-image
-            style="width: 100px; height: 100px"
             src="http://localhost:8081/example/喷泉样例1.jpg"
+            style="width: 300px; height: 200px"
             fit="cover"
           ></el-image>
         </div>
