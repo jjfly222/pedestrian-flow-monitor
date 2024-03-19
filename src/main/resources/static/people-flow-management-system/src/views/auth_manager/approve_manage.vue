@@ -4,8 +4,9 @@
       <el-row>
         <el-col :span="8">
           <el-form-item label="事件名称">
+
             <el-input v-model="approveForm.name" />
-          </el-form-item>
+          </el-form-item>monitor_view
         </el-col>
         <el-col :span="6">
           <el-form-item label="复核状态" label-width="80">
