@@ -24,7 +24,7 @@
         <div class="monitor_item">
           <span>{{ temInfo.monitorName }}</span>
           <el-image
-            style="width: 100px; height: 100px"
+            style="width: 300px; height: 200px"
             src="https://element.eleme.cn/2.15/#/zh-CN/component/image"
             fit="cover"
           ></el-image>
@@ -32,7 +32,7 @@
         <div class="monitor_item">
           <span>{{ temInfo.monitorName }}例图</span>
           <el-image
-            style="width: 100px; height: 100px"
+            style="width: 300px; height: 200px"
             src="https://element.eleme.cn/2.15/#/zh-CN/component/image"
             fit="cover"
           ></el-image>

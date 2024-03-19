@@ -58,8 +58,8 @@
 <script setup lang="ts">
   import { ref, reactive } from 'vue'
   import { ElMessage } from 'element-plus'
-  import { storeToRefs } from 'pinia'
-  import { useInfoStore } from '@/stores/user'
+  // import { storeToRefs } from 'pinia'
+  import { useUserStore } from '@/stores/user'
   import { v4 as uuidv4 } from 'uuid';
   // const userList: any
   // const userList: Store<"userInfo", {
@@ -72,11 +72,10 @@
   const formDisable = ref(false)
   let editFlag = false
   let dataNo = 0
-  const userList = useInfoStore()
+  const userStore = useUserStore()
   // const { userInfo } = storeToRefs(userList)
-  const { addUser, editUser, deleteUser } = userList
+  const { addUser, editUser, deleteUser } = userStore
 
-  console.log('userList', userList)
   // const tableData = reactive([
   //   {
   //     serialNumber: 1,
@@ -88,7 +87,7 @@
   //     IDnumber: '123456789012345678'
   //   }
   // ])
-  const tableData = userList.userInfo
+  const tableData = userStore.userInfo
   let form = reactive({
     userId: '',
     name: '',

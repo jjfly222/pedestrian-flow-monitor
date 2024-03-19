@@ -1,8 +1,8 @@
 <template>
   <div class="monitor_view">
     <div class="monitor_choose">
-      <span style="margin-right:10px;">地图组</span>
-      <el-select v-model="mapGroup" class="m-2" placeholder="请选择">
+      <span style="margin-right:10px;color:#000;display:inline-block;width:90px;">地图组</span>
+      <el-select style="width: 200px;" v-model="mapGroup" class="m-2" placeholder="请选择">
         <el-option
             v-for="item in mapGroupOptions"
             :key="item.value"
@@ -302,9 +302,8 @@ function initDensitySpeed() {
     margin-top: 20px;
 
     .block {
-      padding: 30px 0;
+      padding-bottom: 5px;
       text-align: center;
-      // border-right: solid 1px var(--el-border-color);
       display: inline-block;
       width: 20%;
       box-sizing: border-box;
