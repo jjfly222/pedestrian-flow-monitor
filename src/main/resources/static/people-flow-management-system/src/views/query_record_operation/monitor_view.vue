@@ -5,16 +5,21 @@
       <el-select style="width: 200px;" v-model="mapGroup" class="m-2" placeholder="请选择">
         <el-option
             v-for="item in mapGroupOptions"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
+            :key="item.mapGroupId"
+            :label="item.mapGroupName"
+            :value="item.mapGroupId"
         />
       </el-select>
     </div>
     <el-card class="minitor_view">
       <div v-for="(item, index) in monitorList[mapGroup]" :key="index" class="block">
-        <span class="demonstration">{{ item.name }}</span>
-        <el-image style="width: 250px; height: 180px" :src="item.url" fit="contain"/>
+        <span class="demonstration">{{ item.monitorName }}</span>
+        <el-image
+          style="width: 250px; height: 180px" 
+          :src="item.url" 
+          fit="contain"
+          @click="handleTurnToMonitorViewDetail(item)"
+        />
 <!--        <video width="220" height="180" controls>-->
 <!--          &lt;!&ndash; 使用动态属性绑定指定视频文件的路径 &ndash;&gt;-->
 <!--          <source :src="item.url" type="video/mp4"> -->
@@ -30,82 +35,114 @@
 <script setup lang="ts">
 import * as echarts from "echarts";
 import {ref, reactive, onMounted} from 'vue'
+import {useRouter, useRoute} from 'vue-router'
+import { useMonitorStore } from '@/stores/monitor'
 
-const mapGroup = ref('1')
+interface MapGroup {
+  mapGroupId: string,
+  mapGroupName: string,
+  monitorList: Array<string>
+}
+const router = useRouter()
+const mapGroup = ref('')
 const videoUrl= 'http://localhost:8081/video/喷泉中心.mp4'
-const mapGroupOptions = reactive([
-  {
-    label: '长泰广场',
-    value: '1'
-  },
-  {
-    label: '金桥太茂商业中心',
-    value: '2'
-  },
-])
-const monitorList: object = reactive({
-  '1': [
-    {
-      name: '喷泉中心',
-      // url: 'http://localhost:8081/video/喷泉中心.mp4'
-      url: 'http://localhost:8081/picture/喷泉中心.jpg'
-    },
-    {
-      name: '东庭院南街',
-      url: 'http://localhost:8081/picture/东庭院南街.jpg'
-    },
-    {
-      name: '盒马鲜生拐角',
-      url: 'http://localhost:8081/picture/盒马鲜生拐角.jpg'
-    },
-    {
-      name: '一汽大众东街',
-      url: 'http://localhost:8081/picture/一汽大众东街.jpg'
-    },
-    {
-      name: '长泰E座转角',
-      url: 'http://localhost:8081/picture/长泰E座转角.jpg'
-    },
-    {
-      name: '平安银行西街',
-      url: 'http://localhost:8081/picture/平安银行西街.jpg'
-    },
-    {
-      name: '长泰广场1座后街',
-      url: 'http://localhost:8081/picture/长泰广场1座后街.jpg'
-    }
-  ],
-  '2': [
-    {
-      name: '喜茶南门街',
-      url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'
-    },
-    {
-      name: '多乐东南角',
-      url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'
-    },
-    {
-      name: '特斯拉西北街',
-      url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'
-    },
-    {
-      name: 'oppo东北门街道',
-      url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'
-    },
-    {
-      name: '小米东街',
-      url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'
-    },
-    {
-      name: '南门入口区',
-      url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'
-    },
-    {
-      name: '中庭公共区',
-      url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'
-    }
-  ]
+const useMonitor = useMonitorStore()
+const mapGroupOptions = useMonitor.mapGroupList
+mapGroup.value = mapGroupOptions[0].mapGroupId
+// const mapGroupOptions1 = reactive([
+//   {
+//     label: '长泰广场',
+//     value: '1'
+//   },
+//   {
+//     label: '金桥太茂商业中心',
+//     value: '2'
+//   },
+// ])
+const monitorInfoList = useMonitor.monitorInfoList
+const monitorList = reactive({})
+mapGroupOptions.forEach((item:MapGroup) => {
+  const monitorInfo = []
+  item.monitorList.map(val => {
+    const result = monitorInfoList.filter(member => {
+      return member.monitorId === val
+    })
+    monitorInfo.push(...result)
+  })
+  monitorList[item.mapGroupId] = monitorInfo
 })
+
+const handleTurnToMonitorViewDetail = (monitorInfo) => {
+  console.log('click')
+  router.push({
+    name: 'monitor_view_info',
+    state: {
+      rowData: JSON.parse(JSON.stringify(monitorInfo))
+    }
+  })
+}
+// const monitorList1: object = reactive({
+//   '01': [
+//     {
+//       name: '喷泉中心',
+//       url: 'http://localhost:8081/picture/喷泉中心.jpg'
+//     },
+//     {
+//       name: '东庭院南街',
+//       url: 'http://localhost:8081/picture/东庭院南街.jpg'
+//     },
+//     {
+//       name: '盒马鲜生拐角',
+//       url: 'http://localhost:8081/picture/盒马鲜生拐角.jpg'
+//     },
+//     {
+//       name: '一汽大众东街',
+//       url: 'http://localhost:8081/picture/一汽大众东街.jpg'
+//     },
+//     {
+//       name: '长泰E座转角',
+//       url: 'http://localhost:8081/picture/长泰E座转角.jpg'
+//     },
+//     {
+//       name: '平安银行西街',
+//       url: 'http://localhost:8081/picture/平安银行西街.jpg'
+//     },
+//     {
+//       name: '长泰广场1座后街',
+//       url: 'http://localhost:8081/picture/长泰广场1座后街.jpg'
+//     }
+//   ],
+//   '02': [
+//     {
+//       name: '喜茶南门街',
+//       url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'
+//     },
+//     {
+//       name: '多乐东南角',
+//       url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'
+//     },
+//     {
+//       name: '特斯拉西北街',
+//       url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'
+//     },
+//     {
+//       name: 'oppo东北门街道',
+//       url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'
+//     },
+//     {
+//       name: '小米东街',
+//       url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'
+//     },
+//     {
+//       name: '南门入口区',
+//       url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'
+//     },
+//     {
+//       name: '中庭公共区',
+//       url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'
+//     }
+//   ]
+// })
 const mainEchartsDensity = ref()
 const mainEchartsSpeed = ref()
 const mainEchartsDensitySpeed = ref()
