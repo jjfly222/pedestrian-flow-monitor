@@ -14,12 +14,13 @@
     <el-card class="minitor_view">
       <div v-for="(item, index) in monitorList[mapGroup]" :key="index" class="block">
         <span class="demonstration">{{ item.monitorName }}</span>
-        <el-image
-          style="width: 250px; height: 180px" 
-          :src="item.url" 
-          fit="contain"
-          @click="handleTurnToMonitorViewDetail(item)"
-        />
+        <div @click="handleTurnToMonitorViewDetail(item)">
+          <el-image
+            style="width: 98%; height: 180px" 
+            :src="item.url" 
+            fit="contain"
+          />
+        </div>
 <!--        <video width="220" height="180" controls>-->
 <!--          &lt;!&ndash; 使用动态属性绑定指定视频文件的路径 &ndash;&gt;-->
 <!--          <source :src="item.url" type="video/mp4"> -->
@@ -75,7 +76,7 @@ mapGroupOptions.forEach((item:MapGroup) => {
 const handleTurnToMonitorViewDetail = (monitorInfo) => {
   console.log('click')
   router.push({
-    name: 'monitor_view_info',
+    name: 'monitorViewInfo',
     state: {
       rowData: JSON.parse(JSON.stringify(monitorInfo))
     }
@@ -342,7 +343,7 @@ function initDensitySpeed() {
       padding-bottom: 5px;
       text-align: center;
       display: inline-block;
-      width: 20%;
+      width: 25%;
       box-sizing: border-box;
       vertical-align: top;
     }
@@ -354,7 +355,7 @@ function initDensitySpeed() {
       display: block;
       color: var(--el-text-color-secondary);
       font-size: 14px;
-      margin-bottom: 20px;
+      margin-bottom: 10px;
     }
   }
 }

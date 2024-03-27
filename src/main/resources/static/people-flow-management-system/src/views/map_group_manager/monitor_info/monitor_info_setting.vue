@@ -46,23 +46,6 @@
           <el-button type="primary" @click="handleDetail">详情</el-button>
         </template>
         <template v-if="isCollapse">
-          <!-- <el-descriptions-item label="选择模版" span="2">
-            <el-select
-              v-model="temInfo"
-              class="m-2"
-              placeholder="请选择"
-              value-key="temId"
-              size="large"
-              style="width: 240px"
-            >
-              <el-option
-                v-for="item in paramTemplateList"
-                :key="item.temId"
-                :label="item.name"
-                :value="item"
-              />
-            </el-select>
-          </el-descriptions-item> -->
             <el-descriptions-item label="监控名称">{{ temInfo.name }}</el-descriptions-item>
             <el-descriptions-item label="录入时间">{{ temInfo.inputTime }}</el-descriptions-item>
             <el-descriptions-item label="所属分组">{{ temInfo.belongGroup }}</el-descriptions-item>
@@ -79,18 +62,6 @@
               <el-descriptions-item label="密度">{{ item.max_people_density }}</el-descriptions-item>
               <el-descriptions-item label="对应平均最小移动速度" :span="2">{{ item.max_people_speed }}</el-descriptions-item>
             </template>
-            <!-- <el-descriptions-item label="时间范围 1">19:48--19:48</el-descriptions-item>
-            <el-descriptions-item label="最大人数">苏州观前街</el-descriptions-item>
-            <el-descriptions-item label="密度">苏州观前街</el-descriptions-item>
-            <el-descriptions-item label="对应平均最小移动速度" :span="2">苏州观前街</el-descriptions-item>
-            <el-descriptions-item :span="2">
-              <el-divider style="margin: 0;" />
-            </el-descriptions-item>
-            <el-descriptions-item label="时间范围 2">苏州观前街</el-descriptions-item>
-            <el-descriptions-item label="最大人数">苏州观前街</el-descriptions-item>
-            <el-descriptions-item label="密度">苏州观前街</el-descriptions-item>
-            <el-descriptions-item label="对应平均最小移动速度">苏州观前街</el-descriptions-item>
-            <el-descriptions-item label="详细描述">苏州观前街</el-descriptions-item> -->
         </template>
       </el-descriptions>
     </el-card>

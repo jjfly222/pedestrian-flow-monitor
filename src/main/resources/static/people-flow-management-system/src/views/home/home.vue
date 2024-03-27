@@ -3,11 +3,6 @@
     <el-row :gutter="20">
       <el-col :span="12">
         <el-card class="box-card">
-          <!-- <template #header>
-            <div class="card-header">
-              <span>今日监控情况</span>
-            </div>
-          </template> -->
           <div ref="monitorSituationToday" style="width: 100%; height: 400px; margin-top:20px;"></div>
         </el-card>
       </el-col>
