@@ -32,7 +32,7 @@
       <!-- <div ref="mainEchartsSpeed" style="width: 100%; height: 400px; margin-top:20px;"></div> -->
       <div ref="mainEchartsDensitySpeed" style="width: 50%; height: 400px; margin-top:20px;"></div>
     </div>
-    
+
   </div>
 </template>
 
@@ -164,7 +164,7 @@ function initDensity() {
   // 指定图表的配置项和数据
   var option = {
     title: {
-      text: '人流量与时间关系图'
+      text: '人数与时间关系图'
     },
     tooltip: {},
     legend: {
@@ -185,7 +185,7 @@ function initDensity() {
         show: true,
         symbol: ['none', 'arrow']
       },
-      name: '人群密度 人/100平方米',
+      name: '数量',
       type: 'value'
     },
     series: [
