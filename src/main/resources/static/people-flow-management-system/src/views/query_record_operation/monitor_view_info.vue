@@ -71,12 +71,12 @@ const resizeChart = () => {
 };
 const initMonitorSituation = () => {
   const monitorSituationTodayChart = echarts.init(monitorSituationToday.value)
-  let base = +new Date(1988, 9, 3);
+  let base = +new Date(2023, 1, 1);
   let oneDay = 24 * 3600 * 1000;
 
   let data = [[base, Math.random() * 300]];
 
-  for (let i = 1; i < 20000; i++) {
+  for (let i = 1; i < 447; i++) {
     let now = new Date((base += oneDay));
     data.push([+now, Math.abs(Math.round((Math.random() - 0.5) * 20 + data[i - 1][1]))]);
   }
@@ -136,12 +136,12 @@ const initMonitorSituation = () => {
 
 const initMonitorSpeedSituation = () => {
   monitorSpeedSituationChart = echarts.init(monitorSpeedSituation.value)
-  let base = +new Date(1988, 9, 3);
+  let base = +new Date(2023, 1, 1);
   let oneDay = 24 * 3600 * 1000;
 
   let data = [[base, Math.random() * 300]];
 
-  for (let i = 1; i < 20000; i++) {
+  for (let i = 1; i < 447; i++) {
     let now = new Date((base += oneDay));
     data.push([+now, Math.abs(Math.round((Math.random() - 0.5) * 20 + data[i - 1][1]))]);
   }
@@ -191,8 +191,23 @@ const initMonitorSpeedSituation = () => {
         type: 'line',
         smooth: true,
         symbol: 'none',
-        areaStyle: {},
-        data: data
+        areaStyle: {
+          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+            {
+              offset: 0,
+              color: 'rgb(255, 158, 68)'
+            },
+            {
+              offset: 1,
+              color: 'rgb(255, 70, 131)'
+            }
+          ])
+        },
+        data: data,
+        itemStyle: {
+          color: 'rgb(255, 70, 131)'
+        },
+        
       }
     ]
   };
