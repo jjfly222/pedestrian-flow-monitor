@@ -28,9 +28,9 @@
       </div>
     </el-card>
     <div class="monitor_charts">
-      <div ref="mainEchartsDensity" style="width: 50%; height: 400px; margin-top:20px;"></div>
+      <div ref="mainEchartsDensity" style="width: 100%; height: 350px; margin-top:20px;"></div>
       <!-- <div ref="mainEchartsSpeed" style="width: 100%; height: 400px; margin-top:20px;"></div> -->
-      <div ref="mainEchartsDensitySpeed" style="width: 50%; height: 400px; margin-top:20px;"></div>
+      <div ref="mainEchartsDensitySpeed" style="width: 100%; height: 350px; margin-top:20px;"></div>
     </div>
     
   </div>
@@ -362,8 +362,8 @@ function initDensitySpeed() {
     }
   }
   .monitor_charts {
-    display: flex;
-    justify-content: space-around;
+    // display: flex;
+    // justify-content: space-around;
   }
 }
 </style>
