@@ -27,9 +27,12 @@
 <!--        </video>-->
       </div>
     </el-card>
-    <div ref="mainEchartsDensity" style="width: 100%; height: 400px; margin-top:20px;"></div>
-    <div ref="mainEchartsSpeed" style="width: 100%; height: 400px; margin-top:20px;"></div>
-    <div ref="mainEchartsDensitySpeed" style="width: 100%; height: 400px; margin-top:20px;"></div>
+    <div class="monitor_charts">
+      <div ref="mainEchartsDensity" style="width: 50%; height: 400px; margin-top:20px;"></div>
+      <!-- <div ref="mainEchartsSpeed" style="width: 100%; height: 400px; margin-top:20px;"></div> -->
+      <div ref="mainEchartsDensitySpeed" style="width: 50%; height: 400px; margin-top:20px;"></div>
+    </div>
+    
   </div>
 </template>
 
@@ -149,7 +152,7 @@ const mainEchartsSpeed = ref()
 const mainEchartsDensitySpeed = ref()
 onMounted(() => {
   initDensity()
-  initSpeed()
+  // initSpeed()
   initDensitySpeed()
 
 })
@@ -290,7 +293,7 @@ function initDensitySpeed() {
   var myChartDensitySpeed = echarts.init(mainEchartsDensitySpeed.value);
   var option2 = {
     title: {
-      text: '人流量与速度柱状图'
+      text: '人群密度与速度柱状图'
     },
     tooltip: {},
     legend: {
@@ -310,8 +313,8 @@ function initDensitySpeed() {
         show: true,
         symbol: ['none', 'arrow']
       },
-      // name: ' 平均速度 km/h',
-      // type: 'value'
+      name: 'm²/人  m/s',
+      type: 'value'
     },
     series: [
       {
@@ -357,6 +360,10 @@ function initDensitySpeed() {
       font-size: 14px;
       margin-bottom: 10px;
     }
+  }
+  .monitor_charts {
+    display: flex;
+    justify-content: space-around;
   }
 }
 </style>
