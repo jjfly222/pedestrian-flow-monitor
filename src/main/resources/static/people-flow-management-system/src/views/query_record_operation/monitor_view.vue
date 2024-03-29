@@ -362,8 +362,8 @@ function initDensitySpeed() {
     }
   }
   .monitor_charts {
-    //display: flex;
-    //justify-content: space-around;
+    // display: flex;
+    // justify-content: space-around;
   }
 }
 </style>
