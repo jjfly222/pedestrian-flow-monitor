@@ -90,7 +90,7 @@ const initMonitorSituation = () => {
     },
     title: {
       left: 'center',
-      text: '人流量与时间关系'
+      text: '人群数量与时间关系'
     },
     toolbox: {
       feature: {

@@ -164,7 +164,7 @@ function initDensity() {
   // 指定图表的配置项和数据
   var option = {
     title: {
-      text: '人数与时间关系图'
+      text: '人群数量与时间关系图'
     },
     tooltip: {},
     legend: {
