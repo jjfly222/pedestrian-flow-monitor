@@ -28,10 +28,13 @@ public class CalculationServiceImpl implements CalculationService {
     @Autowired
     private SceneMessageDao sceneMessageDao;
 
+
     @Override
     public void CalculationPerson() {
 
         List<SceneMessage> sceneMessages = sceneMessageDao.queryAll();
+        Map<String, SceneMessage> sceneMesMap = sceneMessages.stream().collect(Collectors.toMap(SceneMessage::getGroupId, sceneMessage -> sceneMessage));
+
 
         List<GroupPictureTime> groupPictureTimes = pictureBaseRecordDao.selectAllGroupPictureTime();
         Map<String, List<GroupPictureTime>> groupPictureTimeMap = groupPictureTimes.stream()
@@ -117,6 +120,7 @@ public class CalculationServiceImpl implements CalculationService {
                 secondSpeedDensityInformation.setMonitorId(keyGroupId);
                 secondSpeedDensityInformation.setAvgSpeed(this.calculateAvgSpeed(groupedBySpeedNum.get(keyGroupId).get(i), new BigDecimal(px)));
                 secondSpeedDensityInformation.setAvgNum(this.calculateAvgPersonNum(groupedByTimeNum.get(keyGroupId).get(i)));
+                secondSpeedDensityInformation.setAvgDensity(secondSpeedDensityInformation.getAvgNum().divide(new BigDecimal(sceneMesMap.get(keyGroupId).getAreaSpace())).setScale(2, RoundingMode.HALF_UP));
                 secondSpeedDensityInformationList.add(secondSpeedDensityInformation);
             }
             PictureBaseRecord pictureBaseRecord = new PictureBaseRecord();

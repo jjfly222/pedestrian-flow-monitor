@@ -195,17 +195,17 @@ const initMonitorSpeedSituation = () => {
           color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
             {
               offset: 0,
-              color: 'rgb(255, 158, 68)'
+              color: 'rgb(70,255,113)'
             },
             {
               offset: 1,
-              color: 'rgb(255, 70, 131)'
+              color: 'rgb(70,255,107)'
             }
           ])
         },
         data: data,
         itemStyle: {
-          color: 'rgb(255, 70, 131)'
+          color: 'rgb(132,255,70)'
         },
         
       }
