@@ -80,24 +80,24 @@ const routes: Array<RouteRecordRaw> = [
           }
         ]
       },
-      // 告警管理
+      // 预警管理
       {
         path: "/alarm_manager",
         name: "alarm_manager",
         component: MenuCtl,
-        meta: { title: '告警管理', icon: 'AlarmClock' },
+        meta: { title: '预警管理', icon: 'AlarmClock' },
         children: [
           {
             path: "alarm_info_manager",
             name: "alarm_info_manager",
             component: () => import("@/views/alarm_manager/alarm_info_manager.vue"),
-            meta: { title: '告警信息管理' }
+            meta: { title: '预警信息管理' }
           },
           {
             path: "alarm_info_template_manager",
             name: "alarm_info_template_manager",
             component: () => import("@/views/alarm_manager/alarm_info_template_manager.vue"),
-            meta: { title: '告警信息模板设置' }
+            meta: { title: '预警信息模板设置' }
           }
         ]
       },
@@ -137,7 +137,7 @@ const routes: Array<RouteRecordRaw> = [
             path: "warning_info_view",
             name: "warning_info_view",
             component: () => import("@/views/query_record_operation/warning_info_view.vue"),
-            meta: { title: '告警信息查看' }
+            meta: { title: '预警信息查看' }
           },
           
         ]

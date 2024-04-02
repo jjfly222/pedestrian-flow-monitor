@@ -11,7 +11,7 @@
     >
       <el-table-column type="selection" width="55" />
       <el-table-column type="index" width="60" label="序号"/>
-      <el-table-column property="warningTitle" label="告警标题" width="120" />
+      <el-table-column property="warningTitle" label="预警标题" width="120" />
       <el-table-column property="sendTime" label="发送时间"width="180" />
       <el-table-column property="warningType" label="类型" width="120" />
       <el-table-column property="mapGroup" label="地图分组" width="120" />
@@ -42,7 +42,7 @@
     </el-table>
     <el-dialog
       v-model="dialogVisible"
-      title="处理告警信息"
+      title="处理预警信息"
       width="70%"
     >
       <div class="handle_alarm_info">
@@ -104,9 +104,9 @@ const handleSelectionChange = (val: User[]) => {
 
 const tableData: User[] = reactive([
   {
-    warningTitle: '人群聚集告警',
+    warningTitle: '人群聚集预警',
     sendTime: '2023-12-20 16:00:05',
-    warningType: '聚集告警',
+    warningType: '聚集预警',
     mapGroup: '长泰广场',
     monitorNo: '喷泉中心',
     handleInfo: '未处理',
@@ -116,7 +116,7 @@ const tableData: User[] = reactive([
   {
     warningTitle: '人群速度缓慢',
     sendTime: '2023-12-20 16:00:05',
-    warningType: '移动速度告警',
+    warningType: '移动速度预警',
     mapGroup: '长泰广场',
     monitorNo: '东庭院南街',
     handleInfo: '已安排疏通',
@@ -124,9 +124,9 @@ const tableData: User[] = reactive([
     alarmDetails: ''
   },
   {
-    warningTitle: '人群聚集告警',
+    warningTitle: '人群聚集预警',
     sendTime: '2023-12-20 14:00:05',
-    warningType: '聚集告警',
+    warningType: '聚集预警',
     mapGroup: '长泰广场',
     monitorNo: '盒马鲜生拐角',
     handleInfo: '忽略',
@@ -134,9 +134,9 @@ const tableData: User[] = reactive([
     alarmDetails: ''
   },
   {
-    warningTitle: '人群聚集告警',
+    warningTitle: '人群聚集预警',
     sendTime: '2023-12-20 16:00:05',
-    warningType: '聚集告警',
+    warningType: '聚集预警',
     mapGroup: '金桥太茂商业中心',
     monitorNo: '喜茶南门街',
     handleInfo: '未处理',
@@ -144,9 +144,9 @@ const tableData: User[] = reactive([
     alarmDetails: ''
   },
   {
-    warningTitle: '人群聚集告警',
+    warningTitle: '人群聚集预警',
     sendTime: '2023-12-20 16:00:05',
-    warningType: '聚集告警',
+    warningType: '聚集预警',
     mapGroup: '金桥太茂商业中心',
     monitorNo: '多乐东南角',
     handleInfo: '重发',

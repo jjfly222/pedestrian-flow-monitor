@@ -72,7 +72,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="m/s 时, 发出告警!" label-width="130px">
+            <el-form-item label="m/s 时, 发出预警!" label-width="130px">
             </el-form-item>
           </el-col>
         </el-row>

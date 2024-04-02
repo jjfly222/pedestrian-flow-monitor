@@ -27,7 +27,7 @@
         <el-card class="box-card">
           <el-calendar ref="calendar">
             <template #header="{ date }">
-              <span>告警处理日历</span>
+              <span>预警处理日历</span>
               <span>{{ date }}</span>
               <el-button-group>
                 <el-button size="small" @click="selectDate('prev-year')">
@@ -53,11 +53,11 @@
                 placement="top"
               >
                 <template #content>
-                  告警地图组数量：{{ 10 }}
+                  预警地图组数量：{{ 10 }}
                   <br />
-                  告警监控点数量：{{ 20 }}
+                  预警监控点数量：{{ 20 }}
                   <br />
-                  未处理告警数量：{{ 5 }}
+                  未处理预警数量：{{ 5 }}
                 </template>
                 <p
                   :class="data.isSelected ? 'is-selected' : ''"
