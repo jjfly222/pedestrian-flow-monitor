@@ -2,7 +2,10 @@
   <div class="monitor_view_info">
     <div class="monitor">
       <div class="monitor_video">
-        <span>{{ monitorData.monitorName }}</span>
+        <div style="position:relative; height:32px;">
+          <el-button type="primary" style="position:absolute; left:0;">切换</el-button>
+          <span>{{ monitorData.monitorName }}</span>
+        </div>
         <el-image
           style="width: 100%; height: 400px" 
           :src="monitorData.url" 

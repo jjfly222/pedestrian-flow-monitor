@@ -36,30 +36,6 @@
               >
                 <el-check-tag size="small" :checked="checked" @change="onChange(item.enName)">{{ item.enName }}</el-check-tag>
               </el-descriptions-item>
-              <!-- <el-descriptions-item label="地图组">
-                <el-check-tag size="small" :checked="checked" @change="onChange('map_group')">map_group</el-check-tag>
-              </el-descriptions-item>
-              <el-descriptions-item label="面积">
-                <el-check-tag size="small" :checked="checked" @change="onChange('area')">area</el-check-tag>
-              </el-descriptions-item>
-              <el-descriptions-item label="监控代号">
-                <el-check-tag size="small" :checked="checked" @change="onChange('monitor_name')">monitor_name</el-check-tag>
-              </el-descriptions-item>
-              <el-descriptions-item label="人员数量">
-                <el-check-tag size="small" :checked="checked" @change="onChange('people_num')">people_num</el-check-tag>
-              </el-descriptions-item>
-              <el-descriptions-item label="时间">
-                <el-check-tag size="small" :checked="checked" @change="onChange('occur_time')">occur_time</el-check-tag>
-              </el-descriptions-item>
-              <el-descriptions-item label="密度">
-                <el-check-tag size="small" :checked="checked" @change="onChange('midu')">midu</el-check-tag>
-              </el-descriptions-item>
-              <el-descriptions-item label="最快速度">
-                <el-check-tag size="small" :checked="checked" @change="onChange('fast_sudu')">fast_sudu</el-check-tag>
-              </el-descriptions-item>
-              <el-descriptions-item label="速度">
-                <el-check-tag size="small" :checked="checked" @change="onChange('sudu')">sudu</el-check-tag>
-              </el-descriptions-item> -->
             </el-descriptions>
           </div>
         </el-card>
@@ -98,26 +74,35 @@
 
 <script setup lang="ts">
 import { ref, reactive } from 'vue'
+import { useAlarmStore } from '@/stores/alarm'
+import { v4 as uuidv4 } from 'uuid';
+
+
 import { ElTable, ElMessageBox } from 'element-plus'
 
 interface User {
+  alarmInfoId: string,
   title: string,
   content: string
 }
-const tableData = ref<User[]>([
-  {
-    title: '[map_group] 的 [monitor_name] 监控点位，发现人员拥挤现象',
-    content: '地图组 [map_group] 的 [monitor_name] 监控点，于 [occur_time] 发现人员拥挤现象，该监控点面积为：[area]，人员数量为：' +
-        '[people_num]，场地行人密度达到 [midu] 人/平方米，平均速度为 [sudu]，请及时前' +
-        '往现场疏通交通！！！'
-  },
-  {
-    title: '[map_group] 的 [monitor_name] 监控点位，发现人员移动过缓现象',
-    content: '地图组 [map_group] 的 [monitor_name] 监控点，于 [occur_time] 发现人员移动过缓现象，该监控点面积为：[area]，人员数量为：' +
-        '[people_num]，场地行人密度达到 [midu] 人/平方米，平均速度为 [sudu]，请及时前' +
-        '往现场疏通交通！！！'
-  }
-])
+const alarmStore = useAlarmStore()
+const { alarmInfo, addAlarmInfo, editAlarmInfo, deleteAlarmInfo } = alarmStore
+const tableData = alarmInfo
+
+// const tableData = ref<User[]>([
+//   {
+//     title: '[map_group] 的 [monitor_name] 监控点位，发现人员拥挤现象',
+//     content: '地图组 [map_group] 的 [monitor_name] 监控点，于 [occur_time] 发现人员拥挤现象，该监控点面积为：[area]，人员数量为：' +
+//         '[people_num]，场地行人密度达到 [midu] 人/平方米，平均速度为 [sudu]，请及时前' +
+//         '往现场疏通交通！！！'
+//   },
+//   {
+//     title: '[map_group] 的 [monitor_name] 监控点位，发现人员移动过缓现象',
+//     content: '地图组 [map_group] 的 [monitor_name] 监控点，于 [occur_time] 发现人员移动过缓现象，该监控点面积为：[area]，人员数量为：' +
+//         '[people_num]，场地行人密度达到 [midu] 人/平方米，平均速度为 [sudu]，请及时前' +
+//         '往现场疏通交通！！！'
+//   }
+// ])
 const tagList = reactive([
   {
     label: '地图组',
@@ -155,23 +140,27 @@ const tagList = reactive([
 const addTemDialogVisible = ref(false)
 const checked = ref(true)
 const focusEl = ref('')
+const alarmInfoId = ref('')
 const titleContent = ref('')
 const textarea2 = ref('')
 let isAdd = true
 let tableIndex = 0
 
 const handleAddTem = () => {
+  titleContent.value = ''
+  textarea2.value = ''
   addTemDialogVisible.value = true
   isAdd = true
+
 }
 const handleDel = (index: number) => {
-  tableData.value.splice(index, 1)
+  deleteAlarmInfo(index)
 }
 
 const handleEdit = (row: User, index: number) => {
-  console.log(row)
   isAdd = false
   tableIndex = index
+  alarmInfoId.value = row.alarmInfoId
   titleContent.value = row.title
   textarea2.value = row.content
   addTemDialogVisible.value = true
@@ -189,15 +178,24 @@ const onChange = (enName: string) => {
 }
 const handleSaveTem = () => {
   if (isAdd) {
-    tableData.value.push({
+    addAlarmInfo({
+      alarmInfoId: uuidv4(),
       title: titleContent.value,
       content: textarea2.value
     })
   } else {
-    tableData.value.splice(tableIndex, 1, {
+    console.log('tableIndex', tableIndex)
+    console.log('tableData', tableData)
+    const rowData = {
+      alarmInfoId: alarmInfoId.value,
       title: titleContent.value,
       content: textarea2.value
-    })
+    }
+    editAlarmInfo(rowData)
+    // tableData.value.splice(tableIndex, 1, {
+    //   title: titleContent.value,
+    //   content: textarea2.value
+    // })
   }
   addTemDialogVisible.value = false
 }
