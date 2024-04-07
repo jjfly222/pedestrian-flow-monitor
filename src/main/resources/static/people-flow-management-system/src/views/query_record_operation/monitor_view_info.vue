@@ -54,13 +54,30 @@ let monitorData = ref({})
 const monitorSituationToday = ref()
 const monitorSpeedSituation = ref()
 let monitorSpeedSituationChart = null
+let speedChartData: Array<Object> = []
 onMounted(() => {
   if (history.state.rowData) {
     monitorData.value = JSON.parse(JSON.stringify(history.state.rowData))
   }
-  initMonitorSituation()
-  initMonitorSpeedSituation()
+  // initMonitorSituation()
+  // initMonitorSpeedSituation()
   window.addEventListener('resize', resizeChart);
+  var xhr = new XMLHttpRequest();
+  xhr.open('POST', 'http://localhost:8081/calculation/queryDate', true); // 第三个参数true表示异步请求，false表示同步请求（不推荐使用）
+  xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState === XMLHttpRequest.DONE) {
+      if (xhr.status === 200) {
+        // console.log('success', xhr.responseText); // 响应内容
+        speedChartData = JSON.parse(xhr.responseText)
+        initMonitorSituation()
+        initMonitorSpeedSituation()
+      } else {
+        console.error('Error:', xhr.status); // 请求出错
+      }
+    }
+  };
+  xhr.send();
 })
 
 onUnmounted(() => {
@@ -77,12 +94,16 @@ const initMonitorSituation = () => {
   let base = +new Date(2023, 1, 1);
   let oneDay = 24 * 3600 * 1000;
 
-  let data = [[base, Math.random() * 300]];
+  // let data = [[base, Math.random() * 300]];
+  let data = [];
 
-  for (let i = 1; i < 447; i++) {
-    let now = new Date((base += oneDay));
-    data.push([+now, Math.abs(Math.round((Math.random() - 0.5) * 20 + data[i - 1][1]))]);
+  for (let i = 0; i < speedChartData.length; i++) {
+    // let now = new Date((base += oneDay));
+    let now = new Date(speedChartData[i].startTime)
+    // data.push([+now, Math.abs(Math.round((Math.random() - 0.5) * 20 + data[i - 1][1]))]);
+    data.push([+now, speedChartData[i].avgNum]);
   }
+
 
   const option = {
     tooltip: {
@@ -142,11 +163,14 @@ const initMonitorSpeedSituation = () => {
   let base = +new Date(2023, 1, 1);
   let oneDay = 24 * 3600 * 1000;
 
-  let data = [[base, Math.random() * 300]];
+  let data = [];
 
-  for (let i = 1; i < 447; i++) {
-    let now = new Date((base += oneDay));
-    data.push([+now, Math.abs(Math.round((Math.random() - 0.5) * 20 + data[i - 1][1]))]);
+  for (let i = 0; i < speedChartData.length; i++) {
+    // let now = new Date((base += oneDay));
+    let now = new Date(speedChartData[i].startTime)
+    // data.push([+now, Math.abs(Math.round((Math.random() - 0.5) * 20 + data[i - 1][1]))]);
+    data.push([+now, speedChartData[i].avgSpeed]);
+
   }
 
   const option = {
