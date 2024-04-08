@@ -150,14 +150,66 @@ const handleTurnToMonitorViewDetail = (monitorInfo) => {
 const mainEchartsDensity = ref()
 const mainEchartsSpeed = ref()
 const mainEchartsDensitySpeed = ref()
+let chartData = []
+let xAxisDate = []
 onMounted(() => {
-  initDensity()
-  // initSpeed()
-  initDensitySpeed()
+  getChartData().then(res => {
+    console.log('res', res)
+    chartData = res
+    let data = {}
+    chartData.forEach(item => {
+      if (!data[item.monitorId]) {
+        data[item.monitorId] = [item]
+      } else {
+        data[item.monitorId].push(item)
+      }
+    })
+    console.log('处理后的data', data)
+    let dateNum = 0
+    let dateValue = null
+    Object.keys(data).forEach(item => {
+      if (data[item].length > dateNum) {
+        dateNum = data[item].length
+        dateValue = item
+      }
+    })
+    data[dateValue].forEach(item => {
+      xAxisDate.push(item.startTime)
+    })
+    const avgNumList = {}
+    xAxisDate.forEach((item, index) => {
+      Object.keys(data).forEach(element => {
+        if (!avgNumList[element]) {
+          avgNumList[element] = {}
+          avgNumList[element]['avgSpeed'] = []
+          avgNumList[element]['avgDensity'] = []
+          avgNumList[element]['avgNum'] = []
+          avgNumList[element]['avgSpeed'].length = xAxisDate.length
+          avgNumList[element]['avgDensity'].length = xAxisDate.length
+          avgNumList[element]['avgNum'].length = xAxisDate.length
+        }
+        let compareDate = data[element].filter(ele => {
+          return ele.startTime === item
+        })
+        if (compareDate.length !== 0) {
+          console.log('compareDate', compareDate)
+          avgNumList[element]['avgSpeed'][index] = compareDate[0].avgSpeed
+          avgNumList[element]['avgDensity'][index] = compareDate[0].avgDensity
+          avgNumList[element]['avgNum'][index] = compareDate[0].avgNum
+
+        }
+      })
+    })
+    console.log('avgNumList', avgNumList)
+    initDensity(avgNumList)
+    // initSpeed()
+    initDensitySpeed(avgNumList)
+  })
+  
 
 })
 
-function initDensity() {
+function initDensity(yData) {
   // 基于准备好的dom，初始化echarts实例
   var myChartDensity = echarts.init(mainEchartsDensity.value);
 
@@ -178,7 +230,8 @@ function initDensity() {
       },
       type: 'category',
       name: '时间',
-      data: ['2023-10-01 17:32:00', '2023-10-01 17:33:00', '2023-10-01 17:34:00', '2023-10-01 17:35:00', '2023-10-01 17:36:00', '2023-10-01 17:37:00']
+      // data: ['2023-10-01 17:32:00', '2023-10-01 17:33:00', '2023-10-01 17:34:00', '2023-10-01 17:35:00', '2023-10-01 17:36:00', '2023-10-01 17:37:00']
+      data: xAxisDate
     },
     yAxis: {
       axisLine: {
@@ -192,7 +245,7 @@ function initDensity() {
       {
         name: '喷泉中心',
         type: 'line',
-        data: [5, 20, 36, 10, 10, 20]
+        data: yData.changtaipqcenter.avgNum
       }, {
         name: '东庭院南街',
         type: 'line',
@@ -289,7 +342,7 @@ function initSpeed() {
   myChartSpeed.setOption(option1);
 }
 
-function initDensitySpeed() {
+function initDensitySpeed(yData) {
   var myChartDensitySpeed = echarts.init(mainEchartsDensitySpeed.value);
   var option2 = {
     title: {
@@ -306,7 +359,8 @@ function initDensitySpeed() {
         symbol: ['none', 'arrow']
       },
       name: '地图组',
-      data: ['2023-10-01 17:32:00', '2023-10-01 17:33:00', '2023-10-01 17:34:00', '2023-10-01 17:35:00', '2023-10-01 17:36:00', '2023-10-01 17:37:00']
+      // data: ['2023-10-01 17:32:00', '2023-10-01 17:33:00', '2023-10-01 17:34:00', '2023-10-01 17:35:00', '2023-10-01 17:36:00', '2023-10-01 17:37:00']
+      data: xAxisDate
     },
     yAxis: {
       axisLine: {
@@ -320,15 +374,33 @@ function initDensitySpeed() {
       {
         // name: '金街 1 号速度',
         type: 'bar',
-        data: [5, 20, 36, 10, 10, 20]
+        data: yData.changtaipqcenter.avgSpeed
       }, {
         // name: '金街 2 号速度',
         type: 'bar',
-        data: [2, 3, 20, 19, 19, 19]
+        data: yData.changtaipqcenter.avgDensity
       }
     ]
   }
   myChartDensitySpeed.setOption(option2);
+}
+const getChartData = () => {
+  return new Promise((res, rej) => {
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', 'http://localhost:8081/calculation/queryDate', true); // 第三个参数true表示异步请求，false表示同步请求（不推荐使用）
+    xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState === XMLHttpRequest.DONE) {
+        if (xhr.status === 200) {
+          // console.log('success', xhr.responseText); // 响应内容
+          res(JSON.parse(xhr.responseText))
+        } else {
+          console.error('Error:', xhr.status); // 请求出错
+        }
+      }
+    };
+    xhr.send();
+  })
 }
 </script>
 <style scoped lang="scss">
