@@ -249,27 +249,27 @@ function initDensity(yData) {
       }, {
         name: '东庭院南街',
         type: 'line',
-        data: [2, 3, 20, 19, 19, 19]
+        data: yData.changtainj.avgNum
       }, {
         name: '盒马鲜生拐角',
         type: 'line',
-        data: [19, 23, 8, 3, 0, 0]
+        data: yData.changtaihm.avgNum
       }, {
         name: '一汽大众东街',
         type: 'line',
-        data: [8, 8, 9, 10, 12, 9]
+        data: yData.changtaiyqdazhong.avgNum
       }, {
         name: '长泰E座转角',
         type: 'line',
-        data: [9, 7, 3, 6, 10, 9]
+        data: yData.changtaiEzhuanjiao.avgNum
       }, {
         name: '平安银行西街',
         type: 'line',
-        data: [18, 22, 25, 29, 30, 32]
+        data: yData.changtaipingan.avgNum
       },{
         name: '长泰广场1座后街',
         type: 'line',
-        data: [18, 22, 25, 29, 30, 32]
+        data: yData.changtaionehou.avgNum
       },
 
     ]
@@ -389,6 +389,9 @@ const getChartData = () => {
     const xhr = new XMLHttpRequest();
     xhr.open('POST', 'http://localhost:8081/calculation/queryDate', true); // 第三个参数true表示异步请求，false表示同步请求（不推荐使用）
     xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
+    const data = {
+      monitorId: "all"
+    };
     xhr.onreadystatechange = function() {
       if (xhr.readyState === XMLHttpRequest.DONE) {
         if (xhr.status === 200) {
@@ -399,7 +402,7 @@ const getChartData = () => {
         }
       }
     };
-    xhr.send();
+    xhr.send(JSON.stringify(data));
   })
 }
 </script>
