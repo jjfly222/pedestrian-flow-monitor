@@ -41,5 +41,15 @@ public class CalculationTaskController {
         List<SecondSpeedDensityInformation> secondSpeedDensityInformations = calculationService.queryDate(monitorId);
         return secondSpeedDensityInformations;
     }
+    @ResponseBody
+    @PostMapping("/updateTime")
+    public void queryDate() {
+         calculationService.updateTime();
+    }
+
+
+
+
+
 
 }

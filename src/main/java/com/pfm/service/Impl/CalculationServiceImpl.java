@@ -118,7 +118,7 @@ public class CalculationServiceImpl implements CalculationService {
                 secondSpeedDensityInformation.setMonitorId(keyGroupId);
                 secondSpeedDensityInformation.setAvgSpeed(this.calculateAvgSpeed(groupedBySpeedNum.get(keyGroupId).get(i), new BigDecimal(px)));
                 secondSpeedDensityInformation.setAvgNum(this.calculateAvgPersonNum(groupedByTimeNum.get(keyGroupId).get(i)));
-                secondSpeedDensityInformation.setAvgDensity(secondSpeedDensityInformation.getAvgNum().divide(new BigDecimal(sceneMesMap.get(keyGroupId).getAreaSpace())).setScale(2, RoundingMode.HALF_UP));
+                secondSpeedDensityInformation.setAvgDensity(secondSpeedDensityInformation.getAvgNum().divide(new BigDecimal(sceneMesMap.get(keyGroupId).getAreaSpace()), 2, RoundingMode.HALF_UP));
                 secondSpeedDensityInformationList.add(secondSpeedDensityInformation);
             }
             PictureBaseRecord pictureBaseRecord = new PictureBaseRecord();
@@ -143,6 +143,20 @@ public class CalculationServiceImpl implements CalculationService {
         }
         List<SecondSpeedDensityInformation> secondSpeedDensityInformations = secondSpeedDensityInformationDao.queryAll(monitorId);
         return secondSpeedDensityInformations;
+    }
+
+
+    @Override
+    public void updateTime() {
+        List<SecondSpeedDensityInformation> secondSpeedDensityInformations = secondSpeedDensityInformationDao.queryAll(null);
+        Map<String, List<SecondSpeedDensityInformation>> collect = secondSpeedDensityInformations.stream().collect(Collectors.groupingBy(aa -> aa.getMonitorId()));
+        collect.forEach((key, list) -> {
+            String keyTime ="2024-04-01 16:56:24";
+            for (int i = 0; i < list.size(); i++) {
+                list.get(i).setStartTime(this.addTime(keyTime, i));
+                secondSpeedDensityInformationDao.updateByPrimaryKey(list.get(i));
+            }
+        });
     }
 
     /**
