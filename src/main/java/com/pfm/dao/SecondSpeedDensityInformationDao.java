@@ -1,13 +1,14 @@
 package com.pfm.dao;
 
 import com.pfm.entity.SecondSpeedDensityInformation;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
 public interface SecondSpeedDensityInformationDao {
-    List<SecondSpeedDensityInformation> queryAll();
+    List<SecondSpeedDensityInformation> queryAll(@Param("monitorId") String monitorId);
 
     int deleteByPrimaryKey(Integer pkId);
 

@@ -106,10 +106,8 @@ public class CalculationServiceImpl implements CalculationService {
             String keyGroupId = key.split("__")[0];
             String keyTime = key.split("__")[1];
             int px = 80;
-            for (SceneMessage sceneMessage : sceneMessages) {
-                if (sceneMessage.getGroupId().equals(keyGroupId)) {
-                    px = sceneMessage.getStandLength();
-                }
+            if (sceneMesMap.get(keyGroupId) != null) {
+                px = sceneMesMap.get(keyGroupId).getStandLength();
             }
 
 
@@ -131,15 +129,19 @@ public class CalculationServiceImpl implements CalculationService {
 
         secondSpeedDensityInformationDao.insertAll(secondSpeedDensityInformationList);
 
-        System.out.println("aaaaaaaaaa");
+        System.out.println("行人信息计算完成");
         return;
 
     }
 
 
     @Override
-    public List<SecondSpeedDensityInformation> queryDate() {
-        List<SecondSpeedDensityInformation> secondSpeedDensityInformations = secondSpeedDensityInformationDao.queryAll();
+    public List<SecondSpeedDensityInformation> queryDate(String monitorId) {
+
+        if (monitorId == null || monitorId.equals("all")) {
+            monitorId = null;
+        }
+        List<SecondSpeedDensityInformation> secondSpeedDensityInformations = secondSpeedDensityInformationDao.queryAll(monitorId);
         return secondSpeedDensityInformations;
     }
 

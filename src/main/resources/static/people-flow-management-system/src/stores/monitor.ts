@@ -31,11 +31,15 @@ export const useMonitorStore = defineStore('monitorList', () => {
       inputTime: '2024-02-25',
       mapGroupId: '01',
       mapGroupName: '长泰广场',
-      regionShape: 'circle', // circle: 圆形; rectangle: 长方形; trapezoid: 梯形
-      acreage: '450 平方米',
+      regionShape: 'circle', // circle: 圆形;
+      // rectangle: 长方形; trapezoid: 梯形
+      acreage: '40 平方米',
       standardLength: ' 1 米',
       occupiedPixel: '300px',
-      url: 'http://localhost:8081/picture/喷泉中心.jpg',
+      // url: 'http://localhost:8081/picture/喷泉中心.jpg',
+      // url: 'http://localhost:8081/picture/喷泉中心识别后.jpg',
+      // url: 'http://localhost:8081/picture/喷泉人数不多时.jpg',
+      url: 'http://localhost:8081/picture/喷泉人数24.jpg',
       regionForm: [{
         time_start: '23:31:16',
         time_end: '23:41:15',

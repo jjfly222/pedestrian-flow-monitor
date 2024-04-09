@@ -154,6 +154,7 @@
           <el-table-column label="时间" width="240">
             <template #default="scope">{{ scope.row.date }}</template>
           </el-table-column>
+          <el-table-column property="averageNum" label="人群数量" show-overflow-tooltip />
           <el-table-column property="averageSpeed" label="平均速度" show-overflow-tooltip />
           <el-table-column property="crowdDensity" label="人群密度" show-overflow-tooltip />
 
@@ -223,12 +224,14 @@ interface User {
   mapGroup: string
   monitoryPointName: string
   date: string
+  averageNum: string
   averageSpeed: string
   crowdDensity: string
 }
 interface MapGroup {
   mapGroup: string
   date: string
+  averageNum: string
   averageSpeed: string
   crowdDensity: string
 }
@@ -237,44 +240,57 @@ const tableData:User[] = [
   {
     mapGroup: '长泰广场',
     monitoryPointName: '喷泉中心',
-    date: '2021-08-01 12:00:00',
-    averageSpeed: '1.2',
-    crowdDensity: '1.2'
+    date: '2024-04-01 16:56:25',
+    averageNum: '25',
+    averageSpeed: '1.28',
+    crowdDensity: '0.63'
   },
   {
     mapGroup: '长泰广场',
-    monitoryPointName: '东庭院南街',
-    date: '2021-08-01 12:00:00',
-    averageSpeed: '1.2',
-    crowdDensity: '1.2'
+    monitoryPointName: '喷泉中心',
+    date: '2024-04-01 16:56:30',
+    averageNum: '27',
+    averageSpeed: '1.24',
+    crowdDensity: '0.68'
   },
   {
-    mapGroup: '金桥太茂商业中心',
-    monitoryPointName: '喜茶南门街',
-    date: '2021-08-01 12:00:00',
-    averageSpeed: '1.2',
-    crowdDensity: '1.2'
+    mapGroup: '长泰广场',
+    monitoryPointName: '喷泉中心',
+    date: '2024-04-01 16:56:35',
+    averageNum: '28',
+    averageSpeed: '0.85',
+    crowdDensity: '10.69'
   },
   {
-    mapGroup: '金桥太茂商业中心',
+    mapGroup: '长泰广场',
     monitoryPointName: '多乐东南角',
-    date: '2021-08-01 12:00:00',
-    averageSpeed: '1.2',
-    crowdDensity: '1.2'
+    date: '2024-04-01 16:56:40',
+    averageNum: '23',
+    averageSpeed: '1.08',
+    crowdDensity: '0.58'
   }
 ]
 const mapGroupData:MapGroup[] = [
   {
     mapGroup: '长泰广场',
-    date: '2021-08-01 12:00:00',
-    averageSpeed: '1.2',
-    crowdDensity: '1.2'
+    date: '2024-04-01 16:56:45',
+    averageNum: '24',
+    averageSpeed: '0.86',
+    crowdDensity: '0.59'
   },
   {
-    mapGroup: '金桥太茂商业中心',
-    date: '2021-08-01 12:00:00',
-    averageSpeed: '1.2',
-    crowdDensity: '1.2'
+    mapGroup: '长泰广场',
+    date: '2024-04-01 16:56:50',
+    averageNum: '15',
+    averageSpeed: '0.74',
+    crowdDensity: '0.38'
+  },
+  {
+    mapGroup: '长泰广场',
+    date: '2024-04-01 16:56:55',
+    averageNum: '12',
+    averageSpeed: '0.53',
+    crowdDensity: '0.3'
   }
 ]
 

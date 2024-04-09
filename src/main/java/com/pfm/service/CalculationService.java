@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface CalculationService {
     void  CalculationPerson();
-    List<SecondSpeedDensityInformation> queryDate();
+    List<SecondSpeedDensityInformation> queryDate(String monitId);
 }

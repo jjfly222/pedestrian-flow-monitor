@@ -32,20 +32,20 @@ export const useAlarmStore = defineStore('alarmList', () => {
     alarmInfoId: '000',
     title: '[map_group] 的 [monitor_name] 监控点位，发现人员拥挤现象',
     content: '地图组 [map_group] 的 [monitor_name] 监控点，于 [occur_time] 发现人员拥挤现象，该监控点面积为：[area]，人员数量为：' +
-    '[people_num]，场地行人密度达到 [midu] 人/平方米，平均速度为 [sudu]，请及时前' +
+    '[people_num]，场地行人密度达到 [midu] 人/平方米，平均速度为 [sudu]米/秒，请及时前' +
     '往现场疏通交通！！！'
   }, {
     alarmInfoId: '001',
     title: '[map_group] 的 [monitor_name] 监控点位，发现人员移动过缓现象',
     content: '地图组 [map_group] 的 [monitor_name] 监控点，于 [occur_time] 发现人员移动过缓现象，该监控点面积为：[area]，人员数量为：' +
-    '[people_num]，场地行人密度达到 [midu] 人/平方米，平均速度为 [sudu]，请及时前' +
+    '[people_num]，场地行人密度达到 [midu] 人/平方米，平均速度为 [sudu]米/秒，请及时前' +
     '往现场疏通交通！！！'
   }])
 
   const alarmInfoList = ref<AlarmList[]>([{
     alarmListInfoId: '000',
     warningTitle: '人群聚集告警',
-    sendTime: '2023-12-20 16:00:05',
+    sendTime: '2024-04-01 16:56:29',
     warningType: '聚集告警',
     mapGroup: '长泰广场',
     monitorId: '001',
@@ -54,20 +54,20 @@ export const useAlarmStore = defineStore('alarmList', () => {
     handleTime: '',
     alarmDetails: '',
     alarmInfoId: '000',
-    people_num: '1500',
-    midu: '8',
-    sudu: '0.5',
-    max_people_speed: '0.5'
+    people_num: '29',
+    midu: '0.73',
+    sudu: '1.03',
+    max_people_speed: '1.1'
   }, {
     alarmListInfoId: '001',
     warningTitle: '人群速度缓慢',
-    sendTime: '2023-12-20 16:00:05',
+    sendTime: '2024-03-31 18:24:12',
     warningType: '移动速度告警',
     mapGroup: '长泰广场',
     monitorId: '002',
     monitorName: '东庭院南街',
     handleInfo: '已安排疏通',
-    handleTime: '2023-12-20 17:25:05',
+    handleTime: '2024-03-31 18:30:00',
     alarmDetails: '',
     alarmInfoId: '000',
     people_num: '1500',
@@ -77,7 +77,7 @@ export const useAlarmStore = defineStore('alarmList', () => {
   }, {
     alarmListInfoId: '002',
     warningTitle: '人群聚集告警',
-    sendTime: '2023-12-20 14:00:05',
+    sendTime: '2024-03-31 17:02:30',
     warningType: '聚集告警',
     mapGroup: '长泰广场',
     monitorId: '003',
@@ -93,7 +93,7 @@ export const useAlarmStore = defineStore('alarmList', () => {
   }, {
     alarmListInfoId: '003',
     warningTitle: '人群聚集告警',
-    sendTime: '2023-12-20 16:00:05',
+    sendTime: '2024-03-31 16:10:25',
     warningType: '聚集告警',
     mapGroup: '金桥太茂商业中心',
     monitorId: '008',
@@ -109,7 +109,7 @@ export const useAlarmStore = defineStore('alarmList', () => {
   }, {
     alarmListInfoId: '004',
     warningTitle: '人群聚集告警',
-    sendTime: '2023-12-20 16:00:05',
+    sendTime: '2024-03-31 17:45:20',
     warningType: '聚集告警',
     mapGroup: '金桥太茂商业中心',
     monitorId: '009',

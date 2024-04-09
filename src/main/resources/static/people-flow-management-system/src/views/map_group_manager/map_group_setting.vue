@@ -137,49 +137,49 @@ const mapGroupList = ref([
     mapImgList: [{
       id: 0,
       name: '喷泉中心',
-      url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
+      url: 'http://localhost:8081/background/喷泉中心.jpg',
       addImgFlg: false,
       imgName: ''
     },
     {
       id: 1,
       name: '东庭院南街',
-      url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
+      url: 'http://localhost:8081/background/东庭院南街.jpg',
       addImgFlg: false,
       imgName: ''
     },
     {
       id: 2,
       name: '盒马鲜生拐角',
-      url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
+      url: 'http://localhost:8081/background/盒马鲜生拐角.jpg',
       addImgFlg: false,
       imgName: ''
     },
     {
       id: 3,
       name: '一汽大众东街',
-      url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
+      url: 'http://localhost:8081/background/一汽大众东街.jpg',
       addImgFlg: false,
       imgName: ''
     },
     {
       id: 4,
       name: '长泰E座转角',
-      url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
+      url: 'http://localhost:8081/background/长泰E座转角.jpg',
       addImgFlg: false,
       imgName: ''
     },
     {
       id: 5,
       name: '平安银行西街',
-      url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
+      url: 'http://localhost:8081/background/平安银行西街.jpg',
       addImgFlg: false,
       imgName: ''
     },
     {
       id: 6,
       name: '长泰广场1座后街',
-      url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
+      url: 'http://localhost:8081/background/长泰广场1座后街.jpg',
       addImgFlg: false,
       imgName: ''
     }]
@@ -192,49 +192,49 @@ const mapGroupList = ref([
     mapImgList: [{
       id: 0,
       name: '喜茶南门街',
-      url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
+      url: 'http://localhost:8081/background/喜茶南门街.jpg',
       addImgFlg: false,
       imgName: ''
     },
       {
         id: 1,
         name: '多乐东南角',
-        url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
+        url: 'http://localhost:8081/background/多乐东南角.jpg',
         addImgFlg: false,
         imgName: ''
       },
       {
         id: 2,
         name: '特斯拉西北街',
-        url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
+        url: 'http://localhost:8081/background/特斯拉西北街.jpg',
         addImgFlg: false,
         imgName: ''
       },
       {
         id: 3,
         name: 'oppo东北门街道',
-        url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
+        url: 'http://localhost:8081/background/oppo东北门街道.jpg',
         addImgFlg: false,
         imgName: ''
       },
       {
         id: 4,
         name: '小米东街',
-        url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
+        url: 'http://localhost:8081/background/小米东街.jpg',
         addImgFlg: false,
         imgName: ''
       },
       {
         id: 5,
         name: '南门入口区',
-        url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
+        url: 'http://localhost:8081/background/南门入口区.jpg',
         addImgFlg: false,
         imgName: ''
       },
       {
         id: 6,
         name: '中庭公共区',
-        url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
+        url: 'http://localhost:8081/background/中庭公共区.jpg',
         addImgFlg: false,
         imgName: ''
       }]
@@ -246,56 +246,56 @@ const mapImgList = reactive([
   {
     id: 0,
     name: '金街1号位',
-    url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
+    url: 'http://localhost:8081/background/4a731a90594a4af544c0c25941171jpeg.jpg',
     addImgFlg: false,
     imgName: ''
   },
   {
     id: 1,
     name: '金街拐角',
-    url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
+    url: 'http://localhost:8081/background/4a731a90594a4af544c0c25941171jpeg.jpg',
     addImgFlg: false,
     imgName: ''
   },
   {
     id: 2,
     name: '金街2号位',
-    url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
+    url: 'http://localhost:8081/background/4a731a90594a4af544c0c25941171jpeg.jpg',
     addImgFlg: false,
     imgName: ''
   },
   {
     id: 3,
     name: '金街3号位',
-    url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
+    url: 'http://localhost:8081/background/4a731a90594a4af544c0c25941171jpeg.jpg',
     addImgFlg: false,
     imgName: ''
   },
   {
     id: 4,
     name: '金街4号位',
-    url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
+    url: 'http://localhost:8081/background/4a731a90594a4af544c0c25941171jpeg.jpg',
     addImgFlg: false,
     imgName: ''
   },
   {
     id: 5,
     name: '金街5号位',
-    url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
+    url: 'http://localhost:8081/background/4a731a90594a4af544c0c25941171jpeg.jpg',
     addImgFlg: false,
     imgName: ''
   },
   {
     id: 6,
     name: '金街6号位',
-    url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
+    url: 'http://localhost:8081/background/4a731a90594a4af544c0c25941171jpeg.jpg',
     addImgFlg: false,
     imgName: ''
   },
   {
     id: 7,
     name: '金街7号位',
-    url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
+    url: 'http://localhost:8081/background/4a731a90594a4af544c0c25941171jpeg.jpg',
     addImgFlg: false,
     imgName: ''
   }
@@ -370,7 +370,7 @@ const handleAddImg = (item) => {
   item.mapImgList.push({
     id: length,
     name: '',
-    url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
+    url: 'http://localhost:8081/background/4a731a90594a4af544c0c25941171jpeg.jpg',
     addImgFlg: true,
     imgName: ''
   })

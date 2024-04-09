@@ -5,10 +5,7 @@ import com.pfm.service.CalculationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,16 +20,25 @@ public class CalculationTaskController {
     @Autowired
     private CalculationService calculationService;
 
+    /**
+     * 计算行人各项数据
+     */
     @ResponseBody
     @PostMapping("/person")
-    public void calculate(){
+    public void calculate() {
         calculationService.CalculationPerson();
 
     }
+
+    /**
+     * 查询行人信息
+     *
+     * @return
+     */
     @ResponseBody
     @PostMapping("/queryDate")
-    public List<SecondSpeedDensityInformation> queryDate(){
-        List<SecondSpeedDensityInformation> secondSpeedDensityInformations = calculationService.queryDate();
+    public List<SecondSpeedDensityInformation> queryDate(@RequestParam("monitorId") String monitorId) {
+        List<SecondSpeedDensityInformation> secondSpeedDensityInformations = calculationService.queryDate(monitorId);
         return secondSpeedDensityInformations;
     }
 
