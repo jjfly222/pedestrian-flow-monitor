@@ -31,7 +31,7 @@ const routes: Array<RouteRecordRaw> = [
             path: "permission_manager",
             name: "permission_manager",
             component: () => import("@/views/auth_manager/permission_manager.vue"),
-            meta: { title: '地图组权限分配' }
+            meta: { title: '监控组权限分配' }
           },
           {
             path: "approve_manage",
@@ -41,18 +41,18 @@ const routes: Array<RouteRecordRaw> = [
           }
         ]
       },
-      // 地图组管理
+      // 监控组管理
       {
         path: "/map_group_manager",
         name: "map_group_manager",
         component: MenuCtl,
-        meta: { title: '地图组管理', icon: 'Place' },
+        meta: { title: '监控组管理', icon: 'Place' },
         children: [
           {
             path: "map_group_setting",
             name: "map_group_setting",
             component: () => import("@/views/map_group_manager/map_group_setting.vue"),
-            meta: { title: '地图组设置' }
+            meta: { title: '监控组设置' }
           },
           {
             path: "monitor_info_list",
@@ -70,13 +70,13 @@ const routes: Array<RouteRecordRaw> = [
             path: "param_setting_list",
             name: "param_setting_list",
             component: () => import("@/views/map_group_manager/param_setting/param_setting_list.vue"),
-            meta: { title: '参数模版设置' }
+            meta: { title: '预警阈值模板设置' }
           },
           {
             path: "param_setting_add",
             name: "param_setting_add",
             component: () => import("@/views/map_group_manager/param_setting/param_setting_add.vue"),
-            meta: { title: '参数模版设置', hidden: true }
+            meta: { title: '预警阈值模板设置', hidden: true }
           }
         ]
       },

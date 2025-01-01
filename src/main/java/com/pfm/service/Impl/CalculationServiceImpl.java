@@ -160,6 +160,7 @@ public class CalculationServiceImpl implements CalculationService {
     }
 
     /**
+     *
      * 计算速度
      */
     public BigDecimal calculateDistance(PictureBaseRecord p1, PictureBaseRecord p2) {

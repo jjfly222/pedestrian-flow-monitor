@@ -14,8 +14,8 @@
             </el-select>
             <el-time-picker v-model="form.timeInterval" placeholder="请选择时间间隔" />
           </el-form-item>
-          <el-form-item label="地图组">
-            <el-select v-model="form.mapGroup" placeholder="请选择地图组">
+          <el-form-item label="监控组">
+            <el-select v-model="form.mapGroup" placeholder="请选择监控组">
               <el-option 
                 v-for="(item, index) in mapGroupList"
                 :key="index"
@@ -70,7 +70,7 @@
           @selection-change="handleSelectionChange"
         >
           <el-table-column type="selection" width="55" />
-          <el-table-column property="mapGroup" label="地图组" width="120" />
+          <el-table-column property="mapGroup" label="监控组" width="120" />
           <el-table-column property="monitoryPointName" label="监控点名称" show-overflow-tooltip />
           <el-table-column label="时间" width="240">
             <template #default="scope">{{ scope.row.date }}</template>
@@ -81,7 +81,7 @@
         </el-table>
         <el-button class="export_button" type="primary" @click="handleExport">导出</el-button>
       </el-tab-pane>
-      <el-tab-pane label="地图组报表">
+      <el-tab-pane label="监控组报表">
         <el-form :model="mapGroupForm" label-width="120px">
           <el-form-item label="时间间隔">
             <el-select v-model="mapGroupForm.timeInterval" placeholder="请选择时间间隔">
@@ -94,8 +94,8 @@
             </el-select>
             <el-time-picker v-model="mapGroupForm.timeInterval" placeholder="请选择时间间隔" />
           </el-form-item>
-          <el-form-item label="地图组">
-            <el-select v-model="mapGroupForm.mapGroup" placeholder="请选择地图组">
+          <el-form-item label="监控组">
+            <el-select v-model="mapGroupForm.mapGroup" placeholder="请选择监控组">
               <el-option 
                 v-for="(item, index) in mapGroupList"
                 :key="index"
@@ -150,7 +150,7 @@
           @selection-change="handleMapGroupSelectionChange"
         >
           <el-table-column type="selection" width="55" />
-          <el-table-column property="mapGroup" label="地图组" width="120" />
+          <el-table-column property="mapGroup" label="监控组" width="120" />
           <el-table-column label="时间" width="240">
             <template #default="scope">{{ scope.row.date }}</template>
           </el-table-column>
@@ -240,54 +240,54 @@ const tableData:User[] = [
   {
     mapGroup: '长泰广场',
     monitoryPointName: '喷泉中心',
-    date: '2024-04-01 16:56:25',
+    date: '2024-12-01 16:56:25',
     averageNum: '25',
-    averageSpeed: '1.28',
-    crowdDensity: '0.63'
+    averageSpeed: '0.46',
+    crowdDensity: '1.6'
   },
   {
     mapGroup: '长泰广场',
     monitoryPointName: '喷泉中心',
-    date: '2024-04-01 16:56:30',
+    date: '2024-12-01 16:56:30',
     averageNum: '27',
-    averageSpeed: '1.24',
-    crowdDensity: '0.68'
+    averageSpeed: '0.44',
+    crowdDensity: '1.6'
   },
   {
     mapGroup: '长泰广场',
     monitoryPointName: '喷泉中心',
-    date: '2024-04-01 16:56:35',
+    date: '2024-12-01 16:56:35',
     averageNum: '28',
-    averageSpeed: '0.85',
-    crowdDensity: '10.69'
+    averageSpeed: '0.49',
+    crowdDensity: '1.58'
   },
   {
     mapGroup: '长泰广场',
     monitoryPointName: '多乐东南角',
-    date: '2024-04-01 16:56:40',
+    date: '2024-12-01 16:56:40',
     averageNum: '23',
-    averageSpeed: '1.08',
-    crowdDensity: '0.58'
+    averageSpeed: '0.66',
+    crowdDensity: '2.05'
   }
 ]
 const mapGroupData:MapGroup[] = [
   {
     mapGroup: '长泰广场',
-    date: '2024-04-01 16:56:45',
+    date: '2024-12-01 16:56:45',
     averageNum: '24',
     averageSpeed: '0.86',
     crowdDensity: '0.59'
   },
   {
     mapGroup: '长泰广场',
-    date: '2024-04-01 16:56:50',
+    date: '2024-12-01 16:56:50',
     averageNum: '15',
     averageSpeed: '0.74',
     crowdDensity: '0.38'
   },
   {
     mapGroup: '长泰广场',
-    date: '2024-04-01 16:56:55',
+    date: '2024-12-01 16:56:55',
     averageNum: '12',
     averageSpeed: '0.53',
     crowdDensity: '0.3'

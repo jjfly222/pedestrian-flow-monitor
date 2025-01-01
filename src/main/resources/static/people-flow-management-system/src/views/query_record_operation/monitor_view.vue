@@ -1,7 +1,7 @@
 <template>
   <div class="monitor_view">
     <div class="monitor_choose">
-      <span style="margin-right:10px;color:#000;display:inline-block;width:90px;">地图组</span>
+      <span style="margin-right:10px;color:#000;display:inline-block;width:90px;">监控组</span>
       <el-select style="width: 200px;" v-model="mapGroup" class="m-2" placeholder="请选择">
         <el-option
             v-for="item in mapGroupOptions"
@@ -358,7 +358,7 @@ function initDensitySpeed(yData) {
       axisLine: {
         symbol: ['none', 'arrow']
       },
-      name: '地图组',
+      name: '监控组',
       // data: ['2023-10-01 17:32:00', '2023-10-01 17:33:00', '2023-10-01 17:34:00', '2023-10-01 17:35:00', '2023-10-01 17:36:00', '2023-10-01 17:37:00']
       data: xAxisDate
     },
@@ -374,11 +374,11 @@ function initDensitySpeed(yData) {
       {
         // name: '金街 1 号速度',
         type: 'bar',
-        data: yData.changtaipqcenter.avgSpeed
+        data: yData.changtaiEzhuanjiao.avgSpeed
       }, {
         // name: '金街 2 号速度',
         type: 'bar',
-        data: yData.changtaipqcenter.avgDensity
+        data: yData.changtaiEzhuanjiao.avgDensity
       }
     ]
   }
@@ -387,7 +387,7 @@ function initDensitySpeed(yData) {
 const getChartData = () => {
   return new Promise((res, rej) => {
     const xhr = new XMLHttpRequest();
-    xhr.open('POST', 'http://localhost:8081/calculation/queryDate', true); // 第三个参数true表示异步请求，false表示同步请求（不推荐使用）
+    xhr.open('POST', 'http://localhost:8081/calculation/queryDate', true); //  ?monitorId=all   第三个参数true表示异步请求，false表示同步请求（不推荐使用）
     xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
     const data = {
       monitorId: "all"
