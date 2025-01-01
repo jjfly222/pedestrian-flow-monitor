@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia'
-import { ref, reactive } from 'vue'
-import { v4 as uuidv4 } from 'uuid';
+import {  reactive } from 'vue'
 
 interface RegionForm {
   time_start: string;
