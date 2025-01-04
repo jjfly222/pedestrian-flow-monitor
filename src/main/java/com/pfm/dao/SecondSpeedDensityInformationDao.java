@@ -10,6 +10,8 @@ import java.util.List;
 public interface SecondSpeedDensityInformationDao {
     List<SecondSpeedDensityInformation> queryAll(@Param("monitorId") String monitorId);
 
+    List<SecondSpeedDensityInformation> queryPeople();
+
     int deleteByPrimaryKey(Integer pkId);
 
     int insert(SecondSpeedDensityInformation record);

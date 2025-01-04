@@ -145,6 +145,15 @@ public class CalculationServiceImpl implements CalculationService {
         return secondSpeedDensityInformations;
     }
 
+    @Override
+    public List<SecondSpeedDensityInformation> queryPeopleDate(String monitorId) {
+
+        if (monitorId == null || monitorId.equals("all")) {
+            monitorId = null;
+        }
+        List<SecondSpeedDensityInformation> secondSpeedDensityInformations = secondSpeedDensityInformationDao.queryPeople();
+        return secondSpeedDensityInformations;
+    }
 
     @Override
     public void updateTime() {

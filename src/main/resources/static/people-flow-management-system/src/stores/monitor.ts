@@ -81,7 +81,8 @@ export const useMonitorStore = defineStore('monitorList', () => {
       acreage: '52 平方米',
       standardLength: ' 1 米',
       occupiedPixel: '380px',
-      url: 'http://localhost:8081/picture/盒马鲜生拐角.jpg',
+      // url: 'http://localhost:8081/picture/盒马鲜生拐角.jpg',
+      url: 'http://localhost:8081/picture/6盒马1.jpg',
       videoUrl: '',
       regionForm: [{
         time_start: '23:31:16',

@@ -128,6 +128,12 @@ const routes: Array<RouteRecordRaw> = [
             meta: { title: '监控查看详情', hidden: true }
           },
           {
+            path: "monitor_view_flow_info",
+            name: "monitorViewFlowInfo",
+            component: () => import("@/views/query_record_operation/monitor_view_flow_info.vue"),
+            meta: { title: '监控查看详情', hidden: true }
+          },
+          {
             path: "report_view",
             name: "report_view",
             component: () => import("@/views/query_record_operation/report_view.vue"),

@@ -3,14 +3,32 @@
     <div class="monitor">
       <div class="monitor_video">
         <div style="position:relative; height:32px;">
-          <el-button type="primary" style="position:absolute; left:0;">切换</el-button>
-          <span>{{ monitorData.monitorName }}</span>
+          <el-button type="primary" style="position:absolute; left:0;" @click="handleCheck">切换</el-button>
+          <span style=" font-size:20px;font-weight: bold;" >{{ monitorData.monitorName }}</span>
         </div>
         <el-image
-          style="width: 100%; height: 400px" 
-          :src="monitorData.url" 
-          fit="contain"
+            v-if="monitorData.monitorName!=='喷泉中心1' && showImg"
+            style="width: 100%; height: 400px"
+            :src="monitorData.url"
+            fit="contain"
         />
+        <video v-if="monitorData.monitorName==='喷泉中心1' && showImg" controls width=100% height=400px>
+          <source :src="monitorData.videoUrl" type="video/mp4">
+        </video>
+        <el-image
+            v-if="monitorData.monitorName!=='喷泉中心1' && !showImg"
+            style="width: 100%; height: 400px"
+            :src="monitorData.url"
+            fit="contain"
+        />
+        <video v-if="monitorData.monitorName==='喷泉中心1' &&!showImg" controls width=100% height=400px>
+          <source src="http://localhost:8081/video/temple_1.mp4" type="video/mp4">
+        </video>
+        <!--        <video v-if="!showImg" width=100% height=400px controls>-->
+        <!--          &lt;!&ndash; 指定视频文件的路径 &ndash;&gt;-->
+        <!--          <source src="http://localhost:8081/video/喷泉中心.mp4" type="video/mp4">-->
+        <!--        </video>-->
+        <!--        <video :src="monitorData.videoUrl" v-if="!showImg" width="200" height="150"></video>-->
       </div>
       <el-divider direction="vertical" style="height: 400px;" />
       <div class="monitor_info">
@@ -55,9 +73,10 @@ let monitorData = ref({})
 const pedestrianFlowMonitoring = ref()
 const monitorSituationToday = ref()
 const monitorSpeedSituation = ref()
+const showImg = ref(true)
 let monitorSpeedSituationChart = null
 let speedChartData: Array<Object> = []
-let 
+let peopleFlowData: Array<Object> = []
 onMounted(() => {
   if (history.state.rowData) {
     monitorData.value = JSON.parse(JSON.stringify(history.state.rowData))
@@ -65,23 +84,8 @@ onMounted(() => {
   // initMonitorSituation()
   // initMonitorSpeedSituation()
   window.addEventListener('resize', resizeChart);
-  var xhr = new XMLHttpRequest();
-  xhr.open('POST', 'http://localhost:8081/calculation/queryDate', true); // 第三个参数true表示异步请求，false表示同步请求（不推荐使用）
-  xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
-  xhr.onreadystatechange = function() {
-    if (xhr.readyState === XMLHttpRequest.DONE) {
-      if (xhr.status === 200) {
-        // console.log('success', xhr.responseText); // 响应内容
-        speedChartData = JSON.parse(xhr.responseText)
-        initMonitorSituation()
-        initMonitorSpeedSituation()
-        initPedestrianFlowMonitoring()
-      } else {
-        console.error('Error:', xhr.status); // 请求出错
-      }
-    }
-  };
-  xhr.send();
+  handleQueryDate()
+  handleQueryPeopleDate()
 })
 
 onUnmounted(() => {
@@ -93,6 +97,49 @@ const resizeChart = () => {
     monitorSpeedSituationChart.resize();
   }
 };
+const handleQueryDate = () => {
+  var xhr = new XMLHttpRequest();
+  xhr.open('POST', 'http://localhost:8081/calculation/queryDate', true); // 第三个参数true表示异步请求，false表示同步请求（不推荐使用）
+  // xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
+  xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState === XMLHttpRequest.DONE) {
+      if (xhr.status === 200) {
+        // console.log('success', xhr.responseText); // 响应内容
+        speedChartData = JSON.parse(xhr.responseText)
+        initMonitorSituation()
+        initMonitorSpeedSituation()
+      } else {
+        console.error('Error:', xhr.status); // 请求出错
+      }
+    }
+  };
+  // ${monitorData.value.monitorDataId}
+  console.log('monitorData.value', monitorData)
+  const params = 'monitorId=' + monitorData.value.monitorDataId;
+  xhr.send(params);
+}
+const handleQueryPeopleDate = () => {
+  var xhr = new XMLHttpRequest();
+  xhr.open('POST', 'http://localhost:8081/calculation/queryPeopleDate', true); // 第三个参数true表示异步请求，false表示同步请求（不推荐使用）
+  // xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
+  xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState === XMLHttpRequest.DONE) {
+      if (xhr.status === 200) {
+        // console.log('success', xhr.responseText); // 响应内容
+        peopleFlowData = JSON.parse(xhr.responseText)
+        initPedestrianFlowMonitoring()
+      } else {
+        console.error('Error:', xhr.status); // 请求出错
+      }
+    }
+  };
+  // ${monitorData.value.monitorDataId}
+  console.log('monitorData.value', monitorData)
+  const params = 'monitorId=' + monitorData.value.monitorDataId;
+  xhr.send(params);
+}
 const initMonitorSituation = () => {
   const monitorSituationTodayChart = echarts.init(monitorSituationToday.value)
   let base = +new Date(2023, 1, 1);
@@ -174,7 +221,6 @@ const initMonitorSpeedSituation = () => {
     let now = new Date(speedChartData[i].startTime)
     // data.push([+now, Math.abs(Math.round((Math.random() - 0.5) * 20 + data[i - 1][1]))]);
     data.push([+now, speedChartData[i].avgSpeed]);
-
   }
 
   const option = {
@@ -238,7 +284,7 @@ const initMonitorSpeedSituation = () => {
         itemStyle: {
           color: 'rgb(132,255,70)'
         },
-        
+
       }
     ]
   };
@@ -251,11 +297,11 @@ const initPedestrianFlowMonitoring = () => {
 
   let data = [];
 
-  for (let i = 0; i < speedChartData.length; i++) {
+  for (let i = 0; i < peopleFlowData.length; i++) {
     // let now = new Date((base += oneDay));
-    let now = new Date(speedChartData[i].startTime)
+    let now = new Date(peopleFlowData[i].startTime)
     // data.push([+now, Math.abs(Math.round((Math.random() - 0.5) * 20 + data[i - 1][1]))]);
-    data.push([+now, speedChartData[i].avgSpeed]);
+    data.push([+now, peopleFlowData[i].avgNum]);
 
   }
 
@@ -264,11 +310,17 @@ const initPedestrianFlowMonitoring = () => {
       trigger: 'axis',
       position: function (pt) {
         return [pt[0], '10%'];
+      },
+      axisPointer: {
+        type: 'shadow',
+        label: {
+          show: true
+        }
       }
     },
     title: {
       left: 'center',
-      text: '人流量监控'
+      text: '客流量监控'
     },
     toolbox: {
       feature: {
@@ -281,11 +333,32 @@ const initPedestrianFlowMonitoring = () => {
     },
     xAxis: {
       type: 'time',
-      boundaryGap: false
+      boundaryGap: false,
+      nameTextStyle: {
+        fontSize: 16,  // 设置x轴名称的字体大小
+        color: '#333', // 设置x轴名称的颜色（可选）
+        fontWeight: 'bold' // 设置字体加粗（可选）
+      },
+      axisLabel: {
+        fontSize: 18,  // 设置x轴刻度值的字体大小
+        color: '#666', // 设置x轴刻度值的颜色（可选）
+        // rotate: 45     // 设置x轴刻度值旋转角度（可选）
+      },
     },
     yAxis: {
       type: 'value',
-      boundaryGap: [0, '100%']
+      name: '客流量（人次）',
+      scale: true,
+      nameTextStyle: {
+        fontSize: 16,  // 设置y轴名称的字体大小
+        color: '#333', // 设置y轴名称的颜色（可选）
+        fontWeight: 'bold' // 设置字体加粗（可选）
+      },
+      axisLabel: {
+        fontSize: 20,  // 设置y轴刻度值的字体大小
+        color: '#666'  // 设置y轴刻度值的颜色（可选）
+      }
+
     },
     dataZoom: [
       {
@@ -300,32 +373,37 @@ const initPedestrianFlowMonitoring = () => {
     ],
     series: [
       {
-        name: '人群速度',
-        type: 'line',
+        name: '客流量',
+        type: 'bar',
         smooth: true,
         symbol: 'none',
-        areaStyle: {
-          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-            {
-              offset: 0,
-              color: 'rgb(70,255,113)'
-            },
-            {
-              offset: 1,
-              color: 'rgb(70,255,107)'
-            }
-          ])
-        },
+
+        // areaStyle: {
+        //   color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+        //     {
+        //       offset: 0,
+        //       color: 'rgb(70,255,113)'
+        //     },
+        //     {
+        //       offset: 1,
+        //       color: 'rgb(70,255,107)'
+        //     }
+        //   ])
+        // },
         data: data,
         itemStyle: {
-          color: 'rgb(132,255,70)'
+          color: 'rgb(135, 206, 235)'
         },
-        
+
       }
     ]
   };
   pedestrianFlowMonitoringChart.setOption(option)
 }
+const handleCheck = () => {
+  showImg.value = !showImg.value
+}
+
 </script>
 <style scoped lang="scss">
 .monitor_view_info{

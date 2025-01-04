@@ -29,6 +29,15 @@
     </if>
 
   </select>
+  <select id="queryPeople"   resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from people_num_information
+<!--    <if test="monitorId != null">-->
+<!--      where  monitor_id = #{monitorId,jdbcType=VARCHAR}-->
+<!--    </if>-->
+
+  </select>
 
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select

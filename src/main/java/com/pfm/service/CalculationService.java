@@ -8,6 +8,8 @@ public interface CalculationService {
     void  CalculationPerson();
     List<SecondSpeedDensityInformation> queryDate(String monitId);
 
+    List<SecondSpeedDensityInformation> queryPeopleDate(String monitId);
+
     void  updateTime();
 
 }

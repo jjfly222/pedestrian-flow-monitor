@@ -42,7 +42,18 @@ public class CalculationTaskController {
         return secondSpeedDensityInformations;
     }
 
-
+    /**
+     * 查询客流量
+     * @RequestParam("monitorId")
+     * @return
+     */
+    @ResponseBody
+    @PostMapping("/queryPeopleDate")
+    public List<SecondSpeedDensityInformation> queryPeopleDate( @RequestParam(value ="monitorId", required = false) String monitorId) throws Exception {
+        System.out.println("查询客流量"+monitorId);
+        List<SecondSpeedDensityInformation> secondSpeedDensityInformations = calculationService.queryPeopleDate(monitorId);
+        return secondSpeedDensityInformations;
+    }
 
 
 //    @ResponseBody

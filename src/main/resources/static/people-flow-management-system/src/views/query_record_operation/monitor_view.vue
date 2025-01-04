@@ -77,7 +77,16 @@ mapGroupOptions.forEach((item:MapGroup) => {
 })
 
 const handleTurnToMonitorViewDetail = (monitorInfo) => {
-  console.log('click')
+  console.log('monitorInfo', monitorInfo)
+  if (monitorInfo.monitorId === '003') {
+    router.push({
+      name: 'monitorViewFlowInfo',
+      state: {
+        rowData: JSON.parse(JSON.stringify(monitorInfo))
+      }
+    })
+    return
+  }
   router.push({
     name: 'monitorViewInfo',
     state: {
