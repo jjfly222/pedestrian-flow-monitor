@@ -3,14 +3,32 @@
     <div class="monitor">
       <div class="monitor_video">
         <div style="position:relative; height:32px;">
-          <el-button type="primary" style="position:absolute; left:0;">切换</el-button>
+          <el-button type="primary" style="position:absolute; left:0;" @click="handleCheck">切换</el-button>
           <span>{{ monitorData.monitorName }}</span>
         </div>
         <el-image
+          v-if="monitorData.monitorName!=='喷泉中心1' && showImg"
           style="width: 100%; height: 400px" 
           :src="monitorData.url" 
           fit="contain"
         />
+        <video v-if="monitorData.monitorName==='喷泉中心1' && showImg" controls width=100% height=400px>
+          <source :src="monitorData.videoUrl" type="video/mp4">
+        </video>
+        <el-image
+          v-if="monitorData.monitorName!=='喷泉中心1' && !showImg"
+          style="width: 100%; height: 400px"
+          :src="monitorData.url"
+          fit="contain"
+        />
+        <video v-if="monitorData.monitorName==='喷泉中心1' &&!showImg" controls width=100% height=400px>
+          <source src="http://localhost:8081/video/temple_1.mp4" type="video/mp4">
+        </video>
+<!--        <video v-if="!showImg" width=100% height=400px controls>-->
+<!--          &lt;!&ndash; 指定视频文件的路径 &ndash;&gt;-->
+<!--          <source src="http://localhost:8081/video/喷泉中心.mp4" type="video/mp4">-->
+<!--        </video>-->
+<!--        <video :src="monitorData.videoUrl" v-if="!showImg" width="200" height="150"></video>-->
       </div>
       <el-divider direction="vertical" style="height: 400px;" />
       <div class="monitor_info">
@@ -53,6 +71,7 @@ import { ref, reactive, onMounted, onUnmounted } from 'vue'
 let monitorData = ref({})
 const monitorSituationToday = ref()
 const monitorSpeedSituation = ref()
+const showImg = ref(true)
 let monitorSpeedSituationChart = null
 let speedChartData: Array<Object> = []
 onMounted(() => {
@@ -64,7 +83,8 @@ onMounted(() => {
   window.addEventListener('resize', resizeChart);
   var xhr = new XMLHttpRequest();
   xhr.open('POST', 'http://localhost:8081/calculation/queryDate', true); // 第三个参数true表示异步请求，false表示同步请求（不推荐使用）
-  xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
+  // xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
+  xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
   xhr.onreadystatechange = function() {
     if (xhr.readyState === XMLHttpRequest.DONE) {
       if (xhr.status === 200) {
@@ -77,7 +97,10 @@ onMounted(() => {
       }
     }
   };
-  xhr.send();
+  // ${monitorData.value.monitorDataId}
+  console.log('monitorData.value', monitorData)
+  const params = 'monitorId=' + monitorData.value.monitorDataId;
+  xhr.send(params);
 })
 
 onUnmounted(() => {
@@ -170,7 +193,6 @@ const initMonitorSpeedSituation = () => {
     let now = new Date(speedChartData[i].startTime)
     // data.push([+now, Math.abs(Math.round((Math.random() - 0.5) * 20 + data[i - 1][1]))]);
     data.push([+now, speedChartData[i].avgSpeed]);
-
   }
 
   const option = {
@@ -240,6 +262,10 @@ const initMonitorSpeedSituation = () => {
   };
   monitorSpeedSituationChart.setOption(option)
 }
+const handleCheck = () => {
+  showImg.value = !showImg.value
+}
+
 </script>
 <style scoped lang="scss">
 .monitor_view_info{

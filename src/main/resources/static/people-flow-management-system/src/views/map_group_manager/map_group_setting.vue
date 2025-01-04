@@ -1,17 +1,17 @@
 <template>
   <div class="map_group_setting">
     <div style="text-align: left; margin-bottom: 20px;">
-      <el-button class="add_button" type="primary" @click="handleAddMapGroup">新增地图组</el-button>
+      <el-button class="add_button" type="primary" @click="handleAddMapGroup">新增监控组</el-button>
     </div>
     
     <el-collapse v-model="activeNames" @change="handleChange">
       <el-collapse-item v-for="(item, index) in mapGroupList" :key="index" :name="item.groupId">
         <template #title>
           <div class="card-header">
-            <span>地图组：</span>
+            <span>监控组：</span>
             <div class="info_area">
               <span v-if="!item.editFlag">{{ item.mapGroupNameSure }}</span>
-              <input v-else type="text" placeholder="请输入地图组名称" v-model="item.mapGroupName"/>
+              <input v-else type="text" placeholder="请输入监控组名称" v-model="item.mapGroupName"/>
             </div>
             <div class="func_area">
               <el-button v-if="!item.editFlag" class="edit_button" type="primary" @click.stop="handleEdit(item)">编辑</el-button>
@@ -326,7 +326,7 @@ const options = [
 const handleAddMapGroup = () => {
   if (isEdit.value) {
     ElMessage({
-      message: '请先保存当前编辑的地图组',
+      message: '请先保存当前编辑的监控组',
       type: 'warning',
     })
     return
@@ -382,7 +382,7 @@ const handleDeleteMap = (item:any, index:number) => {
 const handleEdit = (item) => {
   if (isEdit.value) {
     ElMessage({
-      message: '请先保存当前编辑的地图组',
+      message: '请先保存当前编辑的监控组',
       type: 'warning',
     })
     return

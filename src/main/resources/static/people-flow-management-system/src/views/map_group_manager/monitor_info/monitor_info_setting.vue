@@ -25,15 +25,15 @@
           <span>{{ temInfo.monitorName }}</span>
           <el-image
             src="http://localhost:8081/example/喷泉样例1.jpg"
-            style="width: 300px; height: 200px"
+            style="width: 500px; height: 450px"
             fit="cover"
           ></el-image>
         </div>
         <div class="monitor_item">
-          <span>{{ temInfo.monitorName }}例图</span>
+          <span>{{ temInfo.monitorName }}警戒区域</span>
           <el-image
             src="http://localhost:8081/example/喷泉样例1.jpg"
-            style="width: 300px; height: 200px"
+            style="width: 500px; height: 450px"
             fit="cover"
           ></el-image>
         </div>
@@ -46,11 +46,11 @@
           <el-button type="primary" @click="handleDetail">详情</el-button>
         </template>
         <template v-if="isCollapse">
-            <el-descriptions-item label="监控名称">{{ temInfo.name }}</el-descriptions-item>
+            <el-descriptions-item label="监控名称">{{ temInfo.monitorName }}</el-descriptions-item>
             <el-descriptions-item label="录入时间">{{ temInfo.inputTime }}</el-descriptions-item>
-            <el-descriptions-item label="所属分组">{{ temInfo.belongGroup }}</el-descriptions-item>
+            <el-descriptions-item label="所属分组">{{ temInfo.mapGroupName }}</el-descriptions-item>
             <el-descriptions-item label="区域形状">{{ temInfo.regionShape }}</el-descriptions-item>
-            <el-descriptions-item label="区域面积">{{ temInfo.area }}</el-descriptions-item>
+            <el-descriptions-item label="区域面积">{{ temInfo.acreage }}</el-descriptions-item>
             <el-descriptions-item label="标准长度">{{ temInfo.standardLength }}</el-descriptions-item>
             <el-descriptions-item label="占用像素" :span="2">{{ temInfo.occupiedPixel }}</el-descriptions-item>
             <el-descriptions-item :span="2">
@@ -80,12 +80,12 @@ type Option = {
   temId: string
   name: string
   monitorName: string
-  belongGroup: string
+  mapGroupName: string
   inputTime: string
   desc: string
   standardLength: string
   regionShape: string
-  area: string
+  acreage: string
   occupiedPixel: string
   param1: string
   param2: string
@@ -186,19 +186,30 @@ const paramTemplateList = ref([
     ]
   }
 ])
+
+
 onMounted(() => {
+  // if (history.state.rowData) {
+  //   const newRowData = JSON.parse(JSON.stringify(history.state.rowData))
+  //   const newRegionForm = paramTemplateList.value.filter(item => {
+  //     return item.temId === newRowData.temId
+  //   })
+  //   if (newRegionForm.length !== 0) {
+  //     temInfo.value = newRegionForm[0]
+  //     disabled.value = false
+  //   }
+  // }
+
   if (history.state.rowData) {
     const newRowData = JSON.parse(JSON.stringify(history.state.rowData))
-    const newRegionForm = paramTemplateList.value.filter(item => {
-      return item.temId === newRowData.temId
-    })
-    if (newRegionForm.length !== 0) {
-      temInfo.value = newRegionForm[0]
+     debugger;
+      temInfo.value = newRowData
       disabled.value = false
-    }
   }
+
 })
 const handleSelectChange = ( val: Option ) => {
+  debugger;
   temInfo.value = val
   disabled.value = false
 }

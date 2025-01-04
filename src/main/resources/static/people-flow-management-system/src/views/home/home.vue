@@ -53,7 +53,7 @@
                 placement="top"
               >
                 <template #content>
-                  预警地图组数量：{{ 10 }}
+                  预警监控组数量：{{ 10 }}
                   <br />
                   预警监控点数量：{{ 20 }}
                   <br />
@@ -146,7 +146,7 @@ const initMapGroupMonitorsData = () => {
 
   const option = {
     title: {
-      text: '地图组监控情况',
+      text: '监控组监控情况',
       left: 'center'
     },
     xAxis: {
@@ -170,7 +170,7 @@ const initMapGroupMonitorsData = () => {
     series: [
       {
         realtimeSort: true,
-        // name: '地图组监控情况',
+        // name: '监控组监控情况',
         type: 'bar',
         data: data,
         label: {

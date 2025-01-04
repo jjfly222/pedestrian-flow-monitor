@@ -29,7 +29,7 @@ public class SecondSpeedDensityInformation implements Serializable {
     private Integer timeInterval;
 
     /**
-     * 地图组id
+     * 监控组id
      */
     private String mapId;
 

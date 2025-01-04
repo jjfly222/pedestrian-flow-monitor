@@ -16,7 +16,10 @@ import static org.springframework.boot.SpringApplication.run;
 @SpringBootApplication
 @MapperScan("com.pfm.dao")
 public class Application {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
+
+
+
         Integer a=273;
         Integer b=273;
         System.out.println("***");

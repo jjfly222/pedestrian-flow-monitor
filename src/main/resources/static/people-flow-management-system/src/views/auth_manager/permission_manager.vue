@@ -1,7 +1,7 @@
 <template>
   <div class="map_group_permission_assignment">
     <div class="add_map_group">
-      <el-button class="add_button" type="primary" @click="handleAddMapGroup">新增地图组</el-button>
+      <el-button class="add_button" type="primary" @click="handleAddMapGroup">新增监控组</el-button>
     </div>
     <el-table
       :data="tableData"
@@ -9,7 +9,7 @@
       style="width: 100%"
       empty-text="暂无数据"
     >
-      <el-table-column prop="groupName" label="地图组名称" />
+      <el-table-column prop="groupName" label="监控组名称" />
       <el-table-column label="人员">
         <template #default="scope">
           <el-tooltip
@@ -32,7 +32,7 @@
     </el-table>
     <el-dialog
       v-model="dialogVisible"
-      title="地图组"
+      title="监控组"
       width="70%"
       :before-close="handleClose"
     >
@@ -42,7 +42,7 @@
             <el-form :model="mapGroupDetail.groupFormInfo">
               <el-row>
                 <el-col :span="12">
-                  <el-form-item label="地图组" label-width="100">
+                  <el-form-item label="监控组" label-width="100">
                     <el-input v-model="mapGroupDetail.groupFormInfo.mapGroupName" autocomplete="off" />
                   </el-form-item>
                 </el-col>

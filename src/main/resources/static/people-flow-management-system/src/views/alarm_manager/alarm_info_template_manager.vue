@@ -105,7 +105,7 @@ const tableData = alarmInfo
 // ])
 const tagList = reactive([
   {
-    label: '地图组',
+    label: '监控组',
     enName: 'map_group'
   },
   {

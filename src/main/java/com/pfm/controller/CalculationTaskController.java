@@ -3,7 +3,6 @@ package com.pfm.controller;
 import com.pfm.entity.SecondSpeedDensityInformation;
 import com.pfm.service.CalculationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,23 +31,25 @@ public class CalculationTaskController {
 
     /**
      * 查询行人信息
-     *
+     * @RequestParam("monitorId")
      * @return
      */
     @ResponseBody
     @PostMapping("/queryDate")
-    public List<SecondSpeedDensityInformation> queryDate(@RequestParam("monitorId") String monitorId) {
+    public List<SecondSpeedDensityInformation> queryDate( @RequestParam(value ="monitorId", required = false) String monitorId) throws Exception {
+        System.out.println("aaaaa"+monitorId);
         List<SecondSpeedDensityInformation> secondSpeedDensityInformations = calculationService.queryDate(monitorId);
         return secondSpeedDensityInformations;
     }
-    @ResponseBody
-    @PostMapping("/updateTime")
-    public void queryDate() {
-         calculationService.updateTime();
-    }
 
 
 
+
+//    @ResponseBody
+//    @PostMapping("/updateTime")
+//    public void updateTime() {
+//         calculationService.updateTime();
+//    }
 
 
 
